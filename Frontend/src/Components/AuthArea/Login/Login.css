@@ -1,0 +1,25 @@
+.Login > form {
+    width: 450px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.Login .TextBox {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.Login .FormControlLabel {
+    display: flex;
+}
+
+.Login span {
+    color: lightseagreen;
+    cursor: pointer;
+}
+
+.Login span:hover {
+    text-decoration: underline;
+    color: darkcyan;
+    cursor: pointer;
+}

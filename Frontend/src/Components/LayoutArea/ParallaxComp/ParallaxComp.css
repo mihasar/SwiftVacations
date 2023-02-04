@@ -1,0 +1,9 @@
+/* Parallax-scrolling image and design */
+.parallax-scrolling {
+    background-image: url("assets/images/cryptoImage10.jfif");
+    min-height: 140px;
+    background-size: 100%;
+    background-attachment: fixed;
+    border: 2px solid black;
+    margin-top: -39px;
+}

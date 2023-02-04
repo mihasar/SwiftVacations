@@ -1,0 +1,14 @@
+.PageNotFound {
+	display: grid;
+    align-items: center;
+
+}
+
+.PageNotFound > img, .PageNotFound > iframe {
+    margin-left: 400px;
+}
+
+.PageNotFound > img {
+
+    padding-top: 30px;
+}

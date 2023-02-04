@@ -1,0 +1,25 @@
+.Register > form {
+    width: 450px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.Register .TextBox {
+    width: 100%;
+    margin: 5px 0;
+}
+
+.Register .FormControlLabel {
+    display: flex;
+}
+
+.Register span {
+    color: lightseagreen;
+    cursor: pointer;
+}
+
+.Register span:hover {
+    text-decoration: underline;
+    color: darkcyan;
+    cursor: pointer;
+}

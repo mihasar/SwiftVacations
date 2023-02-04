@@ -1,0 +1,19 @@
+.AuthMenu {
+    font-weight: bold;
+    font-size: 19px;
+}
+
+.AuthMenu>a {
+    color: darkcyan;
+    text-decoration: none;
+}
+
+.AuthMenu>a:hover {
+    color: darkslategray;
+    text-decoration: underline;
+}
+
+.AuthMenu .active {
+    color: darkslategray;
+    text-decoration: underline;
+}
