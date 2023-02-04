@@ -7,9 +7,22 @@ import adminVacationsService from "../5-services/admin-vacations-service";
 const router = express.Router();
 
 // GET http://localhost:4000/api/admin/vacations
-router.get("/admin/vacations", async (request: Request, response: Response, next: NextFunction) => {
+router.get("/admin/vacations", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const vacations = await adminVacationsService.getAllVacationsForAdmin();
+        response.json(vacations);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
+// GET http://localhost:4000/api/admin/vacations/:id
+router.get("/admin/vacations/:vacationId([0-9]+)", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        // Extract vacation ID from route:
+        const vacationId = +request.params.vacationId;
+        const vacations = await adminVacationsService.getOneVacationForAdmin(vacationId);
         response.json(vacations);
     }
     catch (err: any) {
@@ -30,7 +43,7 @@ router.get("/admin/vacations/images/:imageName", async (request: Request, respon
 });
 
 // POST http://localhost:4000/api/admin/vacations
-router.post("/admin/vacations", async (request: Request, response: Response, next: NextFunction) => {
+router.post("/admin/vacations", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body.image = request.files?.image;
         const vacation = new VacationModel(request.body);
@@ -43,7 +56,7 @@ router.post("/admin/vacations", async (request: Request, response: Response, nex
 });
 
 // PUT http://localhost:4000/api/admin/vacations/:id([0-9]+)
-router.put("/admin/vacations/:vacationId([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
+router.put("/admin/vacations/:vacationId([0-9]+)", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body.vacationId = +request.params.vacationId;
         request.body.image = request.files?.image;
@@ -57,7 +70,7 @@ router.put("/admin/vacations/:vacationId([0-9]+)", async (request: Request, resp
 });
 
 // DELETE http://localhost:4000/api/admin/vacations/:id([0-9]+)
-router.delete("/admin/vacations/:id([0-9]+)", async (request: Request, response: Response, next: NextFunction) => {
+router.delete("/admin/vacations/:id([0-9]+)", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         const id = +request.params.id;
         await adminVacationsService.deleteVacation(id);

@@ -16,6 +16,7 @@ function Footer(): JSX.Element {
             <Stack spacing={2}>
                 <Pagination count={5} color="primary" />
             </Stack>
+            <p> All Rights Reserved to Michael saravaisky ©️</p>
         </div>
     );
 }

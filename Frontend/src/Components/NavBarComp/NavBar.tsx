@@ -5,6 +5,8 @@ import Avatar from '@mui/material/Avatar';
 import MenuIcon from '@mui/icons-material/Menu';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import LuggageIcon from '@mui/icons-material/Luggage';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -17,18 +19,11 @@ import { Link } from 'react-router-dom';
 import AuthMenu from '../AuthArea/AuthMenu/AuthMenu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-
-// <NavLink to="/home">Home</NavLink>
-// <span> | </span>
-// <NavLink to="/list">List</NavLink>
-// <span> | </span>
-// <NavLink to="/add">Add</NavLink>
-
 function NavBarComp() {
 
     const home = ["home"];
     const Vacations = ["Vacations"];
-    const AddVacation = ["add"];
+    const Reports = ["Reports"];
     const login = ["login"];
     const register = ["register"];
     const logout = ["logout"];
@@ -81,25 +76,19 @@ function NavBarComp() {
                         Swift Vacations
                     </Typography>
                     <Tabs sx={{ margin: "auto" }} value={value} onChange={(e, value) => setValue(value)}>
-
-                        {
-                            home.map((homePage) => (
-                                <Link style={{ textDecoration: "none", color: "rgb(6, 6, 46)", fontSize: "25px", margin: "10px" }} to={`/${home}`}>
-                                    {homePage}
-                                </Link>
-                            ))
-                        }
                         {
                             Vacations.map((vacationsPage) => (
                                 <Link style={{ textDecoration: "none", color: "rgb(6, 6, 46)", fontSize: "25px", margin: "10px" }} to={`/${Vacations}`}>
-                                    {vacationsPage}
+                                   {vacationsPage} 
+                                   <LuggageIcon fontSize='large'/>
                                 </Link>
                             ))
                         }
                         {
-                            AddVacation.map((AddVacationPage) => (
-                                <Link style={{ textDecoration: "none", color: "rgb(6, 6, 46)", fontSize: "25px", margin: "10px" }} to={`/${AddVacation}`}>
-                                    {AddVacationPage}
+                            Reports.map((reportsPage) => (
+                                <Link style={{ textDecoration: "none", color: "rgb(6, 6, 46)", fontSize: "25px", margin: "10px" }} to={`/${Reports}`}>
+                                     {reportsPage} 
+                                     <AssessmentIcon fontSize='large'/>
                                 </Link>
                             ))
                         }

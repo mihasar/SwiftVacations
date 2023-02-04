@@ -21,6 +21,23 @@ class AdminVacationsService {
         return adminVacations;
     }
 
+    public async getOneVacationForAdmin(vacationId: number): Promise<VacationModel> {
+        
+        // Take vacations from global state:
+        let adminVacations = adminVacationsStore.getState().adminVacations;
+
+        let adminVacation = adminVacations.find(v => v.vacationId === vacationId); 
+
+        // If we don't have vacations:
+        if (!adminVacation) {
+            const response = await axios.get<VacationModel>(appConfig.adminVacationsUrl + vacationId);
+            adminVacation = response.data;
+        }
+
+        // Return vacations:
+        return adminVacation;
+    }
+
     public async addVacation(vacation: VacationModel): Promise<void> {
         const headers = { "Content-Type": "multipart/form-data" };
         const response = await axios.post<VacationModel>(appConfig.adminVacationsUrl, vacation, { headers });
@@ -38,7 +55,7 @@ class AdminVacationsService {
         adminVacationsStore.dispatch({ type: AdminVacationsActionType.UpdateVacation, payload: updateVacation });
     }
 
-    public async deleteProduct(id: number): Promise<void> {
+    public async deleteVacation(id: number): Promise<void> {
         await axios.delete(appConfig.adminVacationsUrl + id);
 
         // Send deleted vacations into redux global state (which will call the reducer):

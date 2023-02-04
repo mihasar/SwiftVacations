@@ -5,6 +5,8 @@ import VacationsList from "../../VacationsArea/VacationsList/VacationsList";
 import Home from "../../HomeArea/Home/Home";
 import AddVacation from "../../VacationsArea/AddVacation/AddVacation";
 import PageNotFound from "../PageNotFound/PageNotFound";
+import EditVacation from "../../VacationsArea/EditVacation/EditVacation";
+import VacationsReports from "../../VacationsArea/VacationsReports/VacationsReports";
 
 function Routing(): JSX.Element {
     return (
@@ -14,6 +16,9 @@ function Routing(): JSX.Element {
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/Vacations" element={<VacationsList />} />
+            <Route path="/Vacations/new" element={<AddVacation />} />
+            <Route path="/Vacations/edit/:vacationId" element={<EditVacation />} />
+            <Route path="/Reports" element={<VacationsReports />} />
             <Route path="/add" element={<AddVacation />} />
             <Route path="/" element={<Navigate to="/register" />} />
             <Route path="*" element={<PageNotFound />} />

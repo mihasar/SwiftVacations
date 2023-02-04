@@ -4,7 +4,7 @@ import fsPromises from "fs/promises"
 import path from "path";
 import fs from "fs";
 
-const vacationImagesFolder = "./src/1-assets/images/";
+const vacationImagesFolder = "./src/1-assets/images/vacations/";
 
 async function saveImage(image: UploadedFile): Promise<string> {
 
@@ -45,7 +45,6 @@ async function deleteImage(existingImageName: string): Promise<void> {
     }
     catch (err: any) {
         console.log(err.message);
-
     }
 }
 
@@ -62,7 +61,7 @@ function createImageName(originalImageName: string): string {
 }
 
 function getAbsolutePath(imageName: string): string {
-    let absolutePath = path.join(__dirname, "..", "1-assets", "images", imageName);
+    let absolutePath = path.join(__dirname, "..", "1-assets", "images", "vacations", imageName);
     if (!fs.existsSync(absolutePath)) {
         absolutePath = path.join(__dirname, "..", "1-assets", "images", "not-found.png");
     }

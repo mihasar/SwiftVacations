@@ -7,8 +7,23 @@ import VacationModel from "../4-models/vacation-model";
 
 async function getAllVacationsForAdmin(): Promise<VacationModel[]> {
 
-    const sql = `SELECT * FROM vacations ORDER BY startDate`;
+    const sql = `SELECT *, CONCAT('${appConfig.adminVacationImagesAddress}', imageName) AS imageName FROM vacations ORDER BY startDate`;
     const vacations = await dal.execute(sql);
+    return vacations;
+
+}
+
+async function getOneVacationForAdmin(vacationId: number): Promise<VacationModel> {
+
+    const sql = `SELECT *, CONCAT('${appConfig.adminVacationImagesAddress}', imageName) AS imageName FROM vacations
+                 WHERE vacationId = ?`;
+
+    const vacations = await dal.execute(sql, vacationId);
+
+    const vacation = vacations[0];
+
+    if (!vacation) throw new ResourceNotFoundError(vacationId);
+
     return vacations;
 
 }
@@ -99,6 +114,7 @@ async function getImageNameFromDB(id: number): Promise<string> {
 
 export default {
     getAllVacationsForAdmin,
+    getOneVacationForAdmin,
     addVacation,
     updateVacation,
     deleteVacation

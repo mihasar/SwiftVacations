@@ -1,15 +1,20 @@
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import VacationModel from '../../../Models/VacationModel';
-import adminVacationsService from '../../../Services/adminVacationsService';
+// import adminVacationsService from '../../../Services/adminVacationsService';
 import userVacationsService from '../../../Services/userVacationsService';
 import notify from '../../../Utils/Notify';
+import PostAddIcon from '@mui/icons-material/PostAdd';
 import Footer from '../../LayoutArea/Footer/Footer';
 import VacationCard from '../VacationCard/VacationCard';
 import "./VacationsList.css";
+import UserModel from '../../../Models/UserModel';
+import RoleModel from '../../../Models/RoleModel';
 
 function VacationsList(): JSX.Element {
 
     const [vacations, setVacations] = useState<VacationModel[]>([]);
+    const [user, setUser] = useState<UserModel>();
 
     useEffect(() => {
         userVacationsService.getAllVacationsForUser()
@@ -22,7 +27,20 @@ function VacationsList(): JSX.Element {
 
         <div className="VacationsList">
 
-            <h3>Some popular vacation destinations include:</h3> <br />
+            <h3>Some of our best destinations:</h3> <br />
+
+            {/* {
+                user?.role === RoleModel.Admin ?
+                    (
+                        <>
+
+                        </>
+                    ) : (
+                        <>
+                        </>
+                    )
+            } */}
+            <NavLink to="/vacations/new"><PostAddIcon fontSize='large' sx={{ marginLeft: "100%", color: "darkolivegreen" }} /></NavLink>
 
             <div className='Cards'>
 
