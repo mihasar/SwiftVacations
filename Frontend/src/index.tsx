@@ -1,10 +1,9 @@
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import Register from './Components/AuthArea/Register/Register';
 import Layout from './Components/LayoutArea/Layout/Layout';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import interceptors from "./Utils/Interceptors"
+import interceptors from "./Utils/Interceptors";
 
 // Create interceptors once:
 interceptors.create()
