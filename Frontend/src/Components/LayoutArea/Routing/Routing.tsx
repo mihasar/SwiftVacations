@@ -11,7 +11,6 @@ import VacationsReports from "../../VacationsArea/VacationsReports/VacationsRepo
 function Routing(): JSX.Element {
     return (
         <Routes>
-
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
             <Route path="/home" element={<Home />} />
@@ -20,7 +19,7 @@ function Routing(): JSX.Element {
             <Route path="/Vacations/edit/:vacationId" element={<EditVacation />} />
             <Route path="/Reports" element={<VacationsReports />} />
             <Route path="/add" element={<AddVacation />} />
-            <Route path="/" element={<Navigate to="/register" />} />
+            <Route path="/" element={<Navigate to="/login" />} />
             <Route path="*" element={<PageNotFound />} />
         </Routes>
 
