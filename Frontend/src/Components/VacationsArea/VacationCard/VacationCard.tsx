@@ -2,7 +2,7 @@ import EventIcon from '@mui/icons-material/Event';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/UserModel';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,6 +14,9 @@ import userVacationsService from '../../../Services/userVacationsService';
 import appConfig from '../../../Utils/AppConfig';
 import notify from '../../../Utils/Notify';
 import "./VacationCard.css";
+import { authStore } from '../../../Redux/AuthState';
+import followersService from '../../../Services/FollowingService';
+import { Button } from 'react-bootstrap';
 
 interface VacationCardProps {
     vacation: VacationModel;
@@ -23,6 +26,17 @@ interface VacationCardProps {
 function VacationCard(props: VacationCardProps): JSX.Element {
 
     const navigate = useNavigate();
+    const [user, setUser] = useState<UserModel>();
+
+    useEffect(() => {
+        setUser(authStore.getState().user);
+        const unsubscribe = authStore.subscribe(() => {
+            setUser(authStore.getState().user);
+        });
+        return () => {
+            unsubscribe();
+        }
+    }, []);
 
     // Delete Vacation
     async function handleDelete(vacationId: number) {
@@ -41,72 +55,77 @@ function VacationCard(props: VacationCardProps): JSX.Element {
         }
     }
 
-    function formatTime(time: string): string {
-        const d = new Date(time);
-        return d.toLocaleString("he-IL");
+    function isFollowing(isFollowing: Number): Boolean {
+        return isFollowing === 1 ? true : false;
     }
 
-    function isFollowing(follow: Number) {
-        return follow === 1 ? true : false;
-
+    async function follow(vacationId: number): Promise<void> {
+        try {
+            await followersService.addUserFollow(props.vacation.vacationId);
+        }
+        catch (err: any) {
+            notify.error(err);
+        }
     }
 
-    function follow() {
-        userVacationsService.addUserFollow(props.vacation.vacationId)
-            .then(() => console.log("Follow"))
-            .catch(err => notify.error(err));
-    }
-
-    function unfollow() {
-        userVacationsService.UserUnfollow(props.vacation.vacationId)
-            .then(() => console.log("Unfollow"))
-            .catch(err => notify.error(err));
+    async function unfollow(vacationId: number): Promise<void> {
+        try {
+            await followersService.UserUnfollow(props.vacation.vacationId);
+        }
+        catch (err: any) {
+            notify.error(err);
+        }
     }
 
     return (
         <div className="VacationCard">
-
-
-            {/* <Link to="#" onClick={deleteProduct}>Delete</Link> */}
-
-            <Card sx={{ maxWidth: 345, backgroundColor: "transparent" }}>
+            <Card sx={{ maxWidth: 345, backgroundColor: "transparent", overflow: "scroll" }}>
                 <CardActionArea>
-
                     <CardMedia
                         component="img"
-                        height="140"
+                        height="200"
                         image={props.vacation?.imageName}
                         alt={props.vacation.destination}
                     >
                     </CardMedia>
-
                     <CardContent sx={{ backgroundColor: "white" }}>
                         <Typography gutterBottom variant="h5" component="div">
-                            {props.vacation.destination}
-                            <IconButton aria-label='edit'
-                                aria-haspopup="true"
-                                color='primary'
-                                sx={{ marginLeft: "85px" }}
-                                onClick={() => navigate("/vacations/edit/" + props.vacation.vacationId)}>
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton
-                                color='error'
-                                sx={{ marginLeft: "5px" }}
-                                onClick={() => { handleDelete(props.vacation?.vacationId) }}>
-                                <ClearIcon />
-                            </IconButton>
+                            {props.vacation.destination} &nbsp;&nbsp;
+                            {user && user.role === "Admin" && (
+                                <>
+                                    <IconButton aria-label='edit'
+                                        aria-haspopup="true"
+                                        color='primary'
+                                        // sx={{ marginLeft: "auto" }}
+                                        onClick={() => navigate("/vacations/edit/" + props.vacation.vacationId)}>
+                                        <EditIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        color='error'
+                                        sx={{ marginLeft: "auto" }}
+                                        onClick={() => { handleDelete(props.vacation?.vacationId) }}>
+                                        <ClearIcon />
+                                    </IconButton>
+                                </>
+                            )}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="div" className='VacationLength'>
-                            <EventIcon fontSize='small' /> {formatTime(props.vacation.startDate)} - {formatTime(props.vacation.endDate)}
+                            <EventIcon fontSize='small' /> {props.vacation.startDate.slice(0, 10).split("-").reverse().join("/")} - {props.vacation.endDate.slice(0, 10).split("-").reverse().join("/")}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {props.vacation.description} <br />
-                            <FavoriteBorderIcon className='Follow' />
                         </Typography>
-                        {/* {isFollowing(props.vacation.idFollowing) ? <button onClick={unfollow} /> : <button onClick={follow} />} */}
-                        {/* {isFollowing(props.vacation.idFollowing) ? <button onClick={unfollow} className="btn btn-success followButton" > ❤
-                        </button> : <button onClick={follow} className="btn btn-danger followButton">❤ </button>} */}
+                        {user && user.role === "User" && (
+                            <div>
+                                <Typography>
+                                    {props.vacation.price}$
+                                </Typography>
+                                {/* <FavoriteBorderIcon className='Follow' /> */}
+                                {!isFollowing(props.vacation.idFollowing) ? <button className='FollowBtn' onClick={() => follow(props.vacation.vacationId)} >Follow</button> : <button onClick={() => unfollow(props.vacation.vacationId)}>Following</button>}<br />Followers: {props.vacation.followersCount}
+                            </div>
+                        )}
+
+
                     </CardContent>
                 </CardActionArea>
             </Card>

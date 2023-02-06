@@ -9,6 +9,8 @@ export class UserVacationsState {
 //2. Action Type - list of actions needed on the data:
 export enum UserVacationsActionType {
     FetchUserVacation = "FetchUserVacation",
+    follow = "follow",
+    unfollow = "unfollow",
     AddFollow = "AddFollow",
     RemoveFollow = "RemoveFollow",
 }
@@ -31,18 +33,31 @@ export function vacationsReducer(currentState = new UserVacationsState(), action
             newState.userVacations = action.payload;
             break;
 
-        case UserVacationsActionType.AddFollow: // Here the payload is the product list fetch by the server
-            const isNotFollowing = newState.userVacations.find(v => v.vacationId === action.payload);
-            if (isNotFollowing.vacationId === 0) {
-                isNotFollowing.vacationId = 1;
+        case UserVacationsActionType.follow: 
+            const isNotFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload);
+            if (isNotFollowingToUpdate.idFollowing === 0) {
+                isNotFollowingToUpdate.idFollowing = 1;
             }
             break;
 
-        case UserVacationsActionType.RemoveFollow: // Here the payload is the product list fetch by the server
-            const isFollowing = newState.userVacations.find(v => v.vacationId === action.payload);
-            if (isFollowing.vacationId === 0) {
-                isFollowing.vacationId = 1;
+        case UserVacationsActionType.unfollow: 
+            const isFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload);
+            if (isFollowingToUpdate.idFollowing === 1) {
+                isFollowingToUpdate.idFollowing = 0;
             }
+            break;
+
+        case UserVacationsActionType.AddFollow: 
+            let indexToAddFollow = newState.userVacations.findIndex(v => v.vacationId === action.payload);
+            if (indexToAddFollow >= 0) {
+                newState.userVacations[indexToAddFollow].followersCount += 1;
+            //    indexToAddFollow -1;
+            }
+            break;
+
+        case UserVacationsActionType.RemoveFollow:
+            const removeFollowerVacation = newState.userVacations.find(v => v.vacationId === action.payload);
+            removeFollowerVacation.followersCount -= 1;
             break;
     }
 

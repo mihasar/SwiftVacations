@@ -4,15 +4,15 @@
     text-align: center;
 }
 
-.Register .TextBox {
-    width: 100%;
-    margin: 5px 0;
+.Register input {
+    border-radius: 5px;
 }
 
-.Register .FormControlLabel {
-    display: flex;
+.Register button {
+    background-color: lightseagreen;
+    width: 50%;
+    cursor: pointer;
 }
-
 .Register span {
     color: lightseagreen;
     cursor: pointer;

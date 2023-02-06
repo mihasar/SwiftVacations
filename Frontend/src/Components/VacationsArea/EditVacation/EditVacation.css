@@ -1,18 +1,17 @@
-.EditVacation {
-    background-color: darkseagreen;
-    background-size: 100% 100%;
+.EditVacation input {
+    border-radius: 5px;
 }
 
 .EditVacation button {
     border: 0px;
-    color: darkgreen;
+    color: darkcyan;
 }
 
 .EditVacation button:hover {
     cursor: pointer;
-    border: 1px solid darkgreen;
+    border: 1px solid darkcyan;
     width: 50%;
     margin-left: 76px;
     font-weight: 550;
-    color: darkgreen;
+    color: darkcyan;
 }

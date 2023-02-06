@@ -12,7 +12,7 @@ class VacationModel {
     public imageName: string;
     public image: File;
     public idFollowing: number;
-    public followerCount: number;
+    public followersCount: number;
 
     public constructor(vacation: VacationModel) {
         this.vacationId = vacation.vacationId;

@@ -1,3 +1,11 @@
-.VacationCard {
-	
+.VacationCard .FollowBtn {
+    background-color: lightskyblue;
+    border: 1px solid darkblue;
+    border-radius: 5px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.VacationCard .FollowBtn:hover {
+    background-color: lightseagreen;
+    cursor: pointer;
 }

@@ -14,10 +14,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthMenu from '../AuthArea/AuthMenu/AuthMenu';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import UserModel from '../../Models/UserModel';
+import { authStore } from '../../Redux/AuthState';
 
 function NavBarComp() {
 
@@ -29,15 +31,24 @@ function NavBarComp() {
     const logout = ["logout"];
 
     const [value, setValue] = useState();
-
-    // const navigate = useNavigate();
-
+    const navigate = useNavigate();
+    const [user, setUser] = useState<UserModel>();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-    // async function navigateHome() {
-    //     navigate("/home");
-    // }
+    useEffect(() => {
+        setUser(authStore.getState().user);
+        const unsubscribe = authStore.subscribe(() => {
+            setUser(authStore.getState().user);
+        });
+        return () => {
+            unsubscribe();
+        }
+    }, []);
+
+    async function navigateVacations() {
+        navigate("/vacations");
+    }
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -54,75 +65,95 @@ function NavBarComp() {
     };
 
     return (
-        <AppBar position="static" sx={{ background: "lightseagreen", fontFamily: "sans-serif" }}>
-            <Container maxWidth="xl">
-                <Toolbar disableGutters>
-                    <BeachAccessIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="a"
-                        href="/"
-                        sx={{
-                            mr: 2,
-                            display: { xs: 'none', md: 'flex' },
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
-                            color: 'inherit',
-                            textDecoration: 'none',
-                        }}
-                    >
-                        Swift Vacations
-                    </Typography>
-                    <Tabs sx={{ margin: "auto" }} value={value} onChange={(e, value) => setValue(value)}>
-                        {
-                            Vacations.map((vacationsPage) => (
-                                <Link style={{ textDecoration: "none", color: "rgb(6, 6, 46)", fontSize: "25px", margin: "10px" }} to={`/${Vacations}`}>
-                                   {vacationsPage} 
-                                   <LuggageIcon fontSize='large'/>
-                                </Link>
-                            ))
-                        }
-                        {
-                            Reports.map((reportsPage) => (
-                                <Link style={{ textDecoration: "none", color: "rgb(6, 6, 46)", fontSize: "25px", margin: "10px" }} to={`/${Reports}`}>
-                                     {reportsPage} 
-                                     <AssessmentIcon fontSize='large'/>
-                                </Link>
-                            ))
-                        }
-                    </Tabs>
-                    <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <AccountCircleIcon />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
+        <div>
+            <AppBar position="static" sx={{ background: "lightseagreen", fontFamily: "sans-serif" }}>
+                <Container maxWidth="xl">
+                    <Toolbar disableGutters>
+                        <BeachAccessIcon sx={{ display: { md: 'flex' }, mr: 1 }} />
+                        <Typography
+                            variant="h6"
+                            noWrap
+                            component="a"
+                            href="/"
+                            sx={{
+                                mr: 2,
+                                display: { xs: 'none', md: 'flex' },
+                                fontFamily: 'monospace',
+                                fontWeight: 700,
+                                letterSpacing: '.3rem',
+                                color: 'inherit',
+                                textDecoration: 'none',
                             }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
+                            onClick={navigateVacations}
                         >
-                            <MenuItem >
-                                <AuthMenu />
-                            </MenuItem>
-                        </Menu>
-                    </Box>
-                </Toolbar>
-            </Container>
-        </AppBar>
+                            Swift Vacations
+                        </Typography>
+                        <Tabs sx={{ marginLeft: "auto" }} value={value} onChange={(e, value) => setValue(value)}>
+                            {user && user.role === "User" && (
+                                <div>
+                                    {
+                                        Vacations.map((vacationsPage) => (
+                                            <Link className='VacationsPageLink' style={{ textDecoration: "none", color: "white", fontSize: "30px", margin: "10px" }} to={`/${Vacations}`}>
+                                                {vacationsPage}
+                                                <LuggageIcon fontSize='large' sx={{ color: "lightseagreen" }} />
+                                            </Link>
+                                        ))
+                                    }
+                                </div>
+                            )}
+                            {user && user.role === "Admin" && (
+                                <div>
+                                    {
+                                        Vacations.map((vacationsPage) => (
+                                            <Link style={{ textDecoration: "none", color: "white", fontSize: "30px", margin: "10px" }} to={`/${Vacations}`}>
+                                                {vacationsPage}
+                                                <LuggageIcon fontSize='large' sx={{ color: "lightseagreen" }} />
+                                            </Link>
+                                        ))
+                                    }
+                                    {
+                                        Reports.map((reportsPage) => (
+
+                                            <Link style={{ textDecoration: "none", color: "white", fontSize: "30px", margin: "10px" }} to={`/${Reports}`}>
+                                                {reportsPage}
+                                                <AssessmentIcon fontSize='large' sx={{ color: "lightseagreen" }} />
+                                            </Link>
+                                        ))
+                                    }
+                                </div>
+                            )}
+                        </Tabs>
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Tooltip title="Settings">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, color: "white" }}>
+                                    <AccountCircleIcon fontSize='large' />
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                sx={{ mt: '45px' }}
+                                id="menu-appbar"
+                                anchorEl={anchorElUser}
+                                anchorOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                open={Boolean(anchorElUser)}
+                                onClose={handleCloseUserMenu}
+                            >
+                                <MenuItem >
+                                    <AuthMenu />
+                                </MenuItem>
+                            </Menu>
+                        </Box>
+                    </Toolbar>
+                </Container>
+            </AppBar>
+        </div>
     );
 }
 export default NavBarComp;

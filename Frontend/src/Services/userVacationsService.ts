@@ -24,18 +24,12 @@ class UserVacationsService {
         return userVacations;
     }
 
-    public async addUserFollow(userId: number): Promise<void> {
-        const headers = { "Content-Type": "multipart/form-data" };
-        await axios.post(appConfig.userVacationsUrl + userId, { headers });
+    public async getUserFavoriteVacations(): Promise<VacationModel[]> {
 
-        userVacationsStore.dispatch({ type: UserVacationsActionType.AddFollow, payload: userId });
-    }
-
-    public async UserUnfollow(userId: number): Promise<void> {
-        const headers = { "Content-Type": "multipart/form-data" };
-        await axios.delete(appConfig.userVacationsUrl + userId, { headers });
-
-        userVacationsStore.dispatch({ type: UserVacationsActionType.RemoveFollow, payload: userId });
+        let vacations = await this.getAllVacationsForUser();
+        const favoriteVacations = vacations.filter(v => v.idFollowing === 1 && v)
+        await this.getAllVacationsForUser();
+        return favoriteVacations;
     }
 
 }

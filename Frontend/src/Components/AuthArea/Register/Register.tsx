@@ -27,6 +27,9 @@ function Register(): JSX.Element {
 
             <form onSubmit={handleSubmit(send)}>
 
+                <h1>Register</h1>
+                <br></br><br></br>
+
                 <label>First name: </label>
                 <input type="text" {...register("firstName", UserModel.firstNameValidation)} />
                 <span className="Err">{formState.errors.firstName?.message}</span>
@@ -42,7 +45,8 @@ function Register(): JSX.Element {
                 <label>Password: </label>
                 <input type="password" {...register("password", UserModel.passwordValidation)} />
                 <span className="Err">{formState.errors.password?.message}</span>
-
+                <br></br><br></br> <br></br>
+                
                 <button>Register</button>
 
                 <h4>Have an account already? <span onClick={() => {

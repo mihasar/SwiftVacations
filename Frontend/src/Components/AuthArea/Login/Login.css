@@ -9,10 +9,6 @@
     margin: 5px 0;
 }
 
-.Login .FormControlLabel {
-    display: flex;
-}
-
 .Login span {
     color: lightseagreen;
     cursor: pointer;
@@ -21,5 +17,15 @@
 .Login span:hover {
     text-decoration: underline;
     color: darkcyan;
+    cursor: pointer;
+}
+
+.Login input {
+    border-radius: 5px;
+}
+
+.Login button {
+    background-color: lightseagreen;
+    width: 50%;
     cursor: pointer;
 }

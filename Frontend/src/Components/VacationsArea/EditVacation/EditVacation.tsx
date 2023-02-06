@@ -26,6 +26,11 @@ function EditVacation(): JSX.Element {
     }, []);
 
     async function send(vacation: VacationModel) {
+        const startTime = new Date(vacation.startDate);
+        const endTime = new Date(vacation.endDate);
+        if(endTime.getTime() < startTime.getTime()) {
+            notify.error("You can't pick end date early than start date!");
+        }
         try {
             vacation.image = (vacation.image as unknown as FileList)[0];
             await adminVacationsService.updateVacation(vacation);
@@ -41,7 +46,7 @@ function EditVacation(): JSX.Element {
     return (
         <div className="EditVacation Box">
 
-            <h3>Edit Vacation</h3>
+            <h2>Edit Vacation</h2>
 
             <form onSubmit={handleSubmit(send)}>
 

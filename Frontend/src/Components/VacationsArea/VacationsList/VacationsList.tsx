@@ -10,47 +10,84 @@ import VacationCard from '../VacationCard/VacationCard';
 import "./VacationsList.css";
 import UserModel from '../../../Models/UserModel';
 import RoleModel from '../../../Models/RoleModel';
+import { Box, Pagination } from '@mui/material';
+import { authStore } from '../../../Redux/AuthState';
+import { userVacationsStore } from '../../../Redux/UserVacationsState';
 
 function VacationsList(): JSX.Element {
 
+    // const [page, setPage] = useState(1);
+    // const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    //     setPage(value);
+    // };
     const [vacations, setVacations] = useState<VacationModel[]>([]);
     const [user, setUser] = useState<UserModel>();
+
+    useEffect(() => {
+        setUser(authStore.getState().user);
+        const unsubscribe = authStore.subscribe(() => {
+            setUser(authStore.getState().user);
+        });
+        return () => {
+            unsubscribe();
+        }
+    }, []);
 
     useEffect(() => {
         userVacationsService.getAllVacationsForUser()
             .then(vacations => setVacations(vacations))
             .catch(err => notify.error(err));
-    }, [vacations])
+    }, [vacations]);
+
+    useEffect(() => {
+        try {
+            userVacationsService.getUserFavoriteVacations();
+
+            userVacationsStore.subscribe(() => {
+                const duplicate = [...userVacationsStore.getState().userVacations];
+                setVacations(duplicate);
+            })
+        }
+        catch (err: any) {
+
+         }
+    }, []);
 
     return (
-
-
         <div className="VacationsList">
 
-            <h3>Some of our best destinations:</h3> <br />
 
-            {/* {
-                user?.role === RoleModel.Admin ?
-                    (
-                        <>
+            {user && user.role === "Admin" && (
+                <div>
 
-                        </>
-                    ) : (
-                        <>
-                        </>
-                    )
-            } */}
-            <NavLink to="/vacations/new"><PostAddIcon fontSize='large' sx={{ marginLeft: "100%", color: "darkolivegreen" }} /></NavLink>
+                    <h1>Your Current Vacations</h1>
+                    <NavLink to="/vacations/new"><PostAddIcon fontSize='large' sx={{ color: "darkcyan", fontSize: "70px" }} /></NavLink>
+                    {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: "center" }}>
+                                <Pagination count={5} page={page} onChange={handleChange} />
+                            </Box> */}
+                    <div className='Cards'>
+                        {vacations.map(v => <VacationCard key={v.vacationId} vacation={v} />)}
+                    </div>
+                </div>
+            )}
+            {user && user.role === "User" && (
+                <div>
+                    <h3>Some of our best destinations:</h3> <br />
+                    {/* <Box sx={{ width: '100%', display: 'flex', justifyContent: "center" }}>
+                                <Pagination count={5} page={page} onChange={handleChange} />
+                            </Box> */}
+                    <div className='Cards'>
+                        {vacations.map(v => <VacationCard key={v.vacationId} vacation={v} />)}
+                    </div>
+                </div>
+            )}
 
-            <div className='Cards'>
 
-                {vacations.map(v => <VacationCard key={v.vacationId} vacation={v} />)}
 
-            </div>
 
 
             {/* TODO - Good activation of pagination */}
-            <Footer />
+            {/* <Footer /> */}
         </div>
     );
 }

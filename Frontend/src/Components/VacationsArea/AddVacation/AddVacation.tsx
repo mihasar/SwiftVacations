@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import VacationModel from "../../../Models/VacationModel";
 import vacationService from "../../../Services/adminVacationsService";
+import notify from "../../../Utils/Notify";
 import "./AddVacation.css";
 
 function AddVacation(): JSX.Element {
@@ -10,6 +11,11 @@ function AddVacation(): JSX.Element {
     const navigate = useNavigate();
 
     async function send(vacation: VacationModel) {
+        const startTime = new Date(vacation.startDate);
+        const endTime = new Date(vacation.endDate);
+        if (endTime.getTime() < startTime.getTime()) {
+            notify.error("You can't pick end date early than start date!");
+        }
         try {
             vacation.image = (vacation.image as unknown as FileList)[0];
             await vacationService.addVacation(vacation);
