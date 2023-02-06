@@ -4,7 +4,6 @@ class CredentialsModel {
     public email: string;
     public password: string;
 
-    // TODO email validation
     // Validation:
     public static emailValidation: RegisterOptions = {
         required: { value: true, message: "Missing email" },

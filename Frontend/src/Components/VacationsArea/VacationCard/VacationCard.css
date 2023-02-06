@@ -3,9 +3,25 @@
     border: 1px solid darkblue;
     border-radius: 5px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-right: 75%;
+}
+
+.VacationCard .TotalPrice {
+    margin-right: 58.5%;
+    opacity: .9;
+}
+
+.VacationCard .Followers {
+    margin-right: 74%;
+    opacity: .7;
+}
+
+.VacationCard .Price {
+    font-weight: bolder;
 }
 
 .VacationCard .FollowBtn:hover {
     background-color: lightseagreen;
     cursor: pointer;
+
 }

@@ -50,13 +50,18 @@ function VacationsList(): JSX.Element {
         }
         catch (err: any) {
 
-         }
+        }
     }, []);
 
     return (
         <div className="VacationsList">
 
 
+            {user && user.role === "User" && (
+                <div>
+
+                </div>
+            )}
             {user && user.role === "Admin" && (
                 <div>
 
@@ -87,7 +92,7 @@ function VacationsList(): JSX.Element {
 
 
             {/* TODO - Good activation of pagination */}
-            {/* <Footer /> */}
+         
         </div>
     );
 }

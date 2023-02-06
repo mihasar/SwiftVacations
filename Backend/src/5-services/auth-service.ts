@@ -13,7 +13,7 @@ async function register(user: UserModel): Promise<string> {
     // If email token:
     if (await isEmailTaken(user.email)) throw new ValidationError(`Email ${user.email} already taken`);
 
-    // New USer is a USer role:
+    // New User is a User role:
     user.role = RoleModel.User;
 
     // Hash Password:

@@ -18,6 +18,7 @@ import { authStore } from '../../../Redux/AuthState';
 import followersService from '../../../Services/FollowingService';
 import { Button } from 'react-bootstrap';
 
+
 interface VacationCardProps {
     vacation: VacationModel;
     // user: UserModel;
@@ -79,7 +80,13 @@ function VacationCard(props: VacationCardProps): JSX.Element {
 
     return (
         <div className="VacationCard">
-            <Card sx={{ maxWidth: 345, backgroundColor: "transparent", overflow: "scroll" }}>
+            <Card sx={{
+                maxWidth: 345, backgroundColor: "transparent", display: "flex",
+                overflow: "hidden",
+                "& .MuiCardHeader-content": {
+                    overflow: "hidden"
+                }
+            }}>
                 <CardActionArea>
                     <CardMedia
                         component="img"
@@ -89,6 +96,14 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                     >
                     </CardMedia>
                     <CardContent sx={{ backgroundColor: "white" }}>
+                        {user && user.role === "User" && (
+                            <div>
+                                <Typography className='TotalPrice'>
+                                    {!isFollowing(props.vacation.idFollowing) ? <button className='FollowBtn' onClick={() => follow(props.vacation.vacationId)} >Follow</button> : <button onClick={() => unfollow(props.vacation.vacationId)}>Following</button>}
+                                    Total price: <span className='Price'>  ${props.vacation.price}</span>
+                                </Typography>
+                            </div>
+                        )}
                         <Typography gutterBottom variant="h5" component="div">
                             {props.vacation.destination} &nbsp;&nbsp;
                             {user && user.role === "Admin" && (
@@ -117,15 +132,9 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                         </Typography>
                         {user && user.role === "User" && (
                             <div>
-                                <Typography>
-                                    {props.vacation.price}$
-                                </Typography>
-                                {/* <FavoriteBorderIcon className='Follow' /> */}
-                                {!isFollowing(props.vacation.idFollowing) ? <button className='FollowBtn' onClick={() => follow(props.vacation.vacationId)} >Follow</button> : <button onClick={() => unfollow(props.vacation.vacationId)}>Following</button>}<br />Followers: {props.vacation.followersCount}
+                                <span className='Followers'>   Followers: {props.vacation.followersCount}</span>
                             </div>
                         )}
-
-
                     </CardContent>
                 </CardActionArea>
             </Card>

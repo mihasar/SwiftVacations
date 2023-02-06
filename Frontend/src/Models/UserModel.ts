@@ -22,7 +22,6 @@ class UserModel {
         maxLength: { value: 30, message: "Last name can't exceeds 30 chars." }
     }
 
-    // TODO good email validation
     public static emailValidation: RegisterOptions = {
         required: { value: true, message: "Missing email" },
         minLength: { value: 4, message: "email must be minimum 4 chars." },

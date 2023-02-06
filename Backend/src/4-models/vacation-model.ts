@@ -24,7 +24,6 @@ class VacationModel {
         this.image = vacation.image;
     }
 
-    // TODO: add validation:
     private static postValidationSchema = Joi.object({
         vacationId: Joi.number().forbidden(),
         destination: Joi.string().required().min(4).max(50),

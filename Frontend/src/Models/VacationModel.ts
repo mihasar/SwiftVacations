@@ -2,7 +2,6 @@ import { RegisterOptions } from "react-hook-form";
 
 class VacationModel {
 
-    // TODO check with northwind fullstack if this class with image, imageName is wrote correctly.
     public vacationId: number;
     public destination: string;
     public description: string;

@@ -1,3 +1,4 @@
+import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import Menu from "../Menu/Menu";
 import Routing from "../Routing/Routing";
@@ -19,9 +20,9 @@ function Layout(): JSX.Element {
                 <Routing />
             </main>
 
-            {/* <footer>
+            <footer>
                 <Footer/>
-            </footer> */}
+            </footer>
 
         </div>
     );
