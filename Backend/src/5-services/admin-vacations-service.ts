@@ -24,7 +24,7 @@ async function getOneVacationForAdmin(vacationId: number): Promise<VacationModel
 
     if (!vacation) throw new ResourceNotFoundError(vacationId);
 
-    return vacations;
+    return vacation;
 
 }
 
@@ -112,10 +112,19 @@ async function getImageNameFromDB(id: number): Promise<string> {
     return vacation.imageName;
 }
 
+async function getReports(): Promise<void> {
+
+    const sql = `SELECT * FROM followers`;
+    const vacations = await dal.execute(sql);
+    return vacations;
+
+}
+
 export default {
     getAllVacationsForAdmin,
     getOneVacationForAdmin,
     addVacation,
     updateVacation,
-    deleteVacation
+    deleteVacation,
+    getReports
 }

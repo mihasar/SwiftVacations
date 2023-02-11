@@ -26,7 +26,7 @@ class VacationModel {
 
     private static postValidationSchema = Joi.object({
         vacationId: Joi.number().forbidden(),
-        destination: Joi.string().required().min(4).max(50),
+        destination: Joi.string().required().min(2).max(50),
         description: Joi.string().required().min(10).max(1000),
         startDate: Joi.string().required().min(3).max(100),
         endDate: Joi.string().required().min(3).max(100),
@@ -37,12 +37,12 @@ class VacationModel {
 
     private static putValidationSchema = Joi.object({
         vacationId: Joi.number().optional().integer().positive(),
-        destination: Joi.string().required().min(2).max(100),
+        destination: Joi.string().required().min(2).max(50),
         description: Joi.string().required().min(5).max(1000),
         startDate: Joi.string().required().min(3).max(100),
         endDate: Joi.string().required().min(3).max(100),
         price: Joi.number().required().min(0).max(5000),
-        imageName: Joi.string().optional().min(38).max(50),
+        imageName: Joi.string().optional().min(38).max(90),
         image: Joi.object().optional(),
     });
 

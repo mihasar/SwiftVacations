@@ -20,9 +20,9 @@ function Layout(): JSX.Element {
                 <Routing />
             </main>
 
-            <footer>
+            {/* <footer>
                 <Footer/>
-            </footer>
+            </footer> */}
 
         </div>
     );

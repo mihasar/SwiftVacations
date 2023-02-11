@@ -1,27 +1,39 @@
-.VacationCard .FollowBtn {
-    background-color: lightskyblue;
-    border: 1px solid darkblue;
+.VacationCard .UnfollowBtn {
+    color: red;
+    border: 0px solid ;
+    background-color: transparent;
     border-radius: 5px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    margin-right: 75%;
+    margin-right: 90%;
+}
+
+.VacationCard .UnfollowBtn:hover {
+    cursor: pointer;
+}
+
+.VacationCard .FollowBtn {
+    background-color: transparent;
+    border: 0px solid;
+    border-radius: 5px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-right: 90%;
+}
+
+.VacationCard .FollowBtn:hover {
+    color: red;
+    cursor: pointer;
 }
 
 .VacationCard .TotalPrice {
-    margin-right: 58.5%;
+    margin-right: 66.3%;
     opacity: .9;
 }
 
-.VacationCard .Followers {
-    margin-right: 74%;
+.VacationCard .Likes {
+    margin-right: 82%;
     opacity: .7;
 }
 
 .VacationCard .Price {
     font-weight: bolder;
-}
-
-.VacationCard .FollowBtn:hover {
-    background-color: lightseagreen;
-    cursor: pointer;
-
 }

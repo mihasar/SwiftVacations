@@ -14,7 +14,21 @@
      border-radius: 9px;
  }
 
+.AddVacation .DescriptionTextBox {
+    padding: 20px;
+    font-size: 15px;
+}
+
+.AddVacation button {
+    border: 0px;
+    color: darkcyan;
+}
+
  .AddVacation form>button:hover {
-     background-color: lightgreen;
-     border: 2px solid green;
+    cursor: pointer;
+    border: 1px solid darkcyan;
+    width: 50%;
+    margin-left: 76px;
+    font-weight: 550;
+    color: darkcyan;
  }

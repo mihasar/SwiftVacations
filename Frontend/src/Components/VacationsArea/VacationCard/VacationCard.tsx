@@ -1,5 +1,6 @@
 import EventIcon from '@mui/icons-material/Event';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import { CardActionArea, CardActions, CardContent, CardMedia, IconButton, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
 import { useEffect, useState } from 'react';
@@ -56,7 +57,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
         }
     }
 
-    function isFollowing(isFollowing: Number): Boolean {
+    function isFollowing(isFollowing: number): Boolean {
         return isFollowing === 1 ? true : false;
     }
 
@@ -80,14 +81,8 @@ function VacationCard(props: VacationCardProps): JSX.Element {
 
     return (
         <div className="VacationCard">
-            <Card sx={{
-                maxWidth: 345, backgroundColor: "transparent", display: "flex",
-                overflow: "hidden",
-                "& .MuiCardHeader-content": {
-                    overflow: "hidden"
-                }
-            }}>
-                <CardActionArea>
+            <Card sx={{ maxWidth: 345, backgroundColor: "white", display: "flex", cursor: "all-scroll", overflow: "auto" }}>
+                <CardActionArea sx={{ cursor: "default" }}>
                     <CardMedia
                         component="img"
                         height="200"
@@ -95,13 +90,14 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                         alt={props.vacation.destination}
                     >
                     </CardMedia>
-                    <CardContent sx={{ backgroundColor: "white" }}>
+                    <CardContent sx={{ backgroundColor: "white", height: "230px" }}>
                         {user && user.role === "User" && (
                             <div>
-                                <Typography className='TotalPrice'>
-                                    {!isFollowing(props.vacation.idFollowing) ? <button className='FollowBtn' onClick={() => follow(props.vacation.vacationId)} >Follow</button> : <button onClick={() => unfollow(props.vacation.vacationId)}>Following</button>}
-                                    Total price: <span className='Price'>  ${props.vacation.price}</span>
-                                </Typography>
+
+                                {!isFollowing(props.vacation.idFollowing) ? <button className='FollowBtn' onClick={() => follow(props.vacation.vacationId)} ><FavoriteBorderIcon />
+                                </button> : <button className='UnfollowBtn' onClick={() => unfollow(props.vacation.vacationId)}><FavoriteIcon /></button>} <br />
+                                <span className='TotalPrice'> Total price: <span className='Price'>  ${props.vacation.price}</span></span>
+
                             </div>
                         )}
                         <Typography gutterBottom variant="h5" component="div">
@@ -125,14 +121,15 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                             )}
                         </Typography>
                         <Typography gutterBottom variant="h6" component="div" className='VacationLength'>
-                            <EventIcon fontSize='small' /> {props.vacation.startDate.slice(0, 10).split("-").reverse().join("/")} - {props.vacation.endDate.slice(0, 10).split("-").reverse().join("/")}
+                            <EventIcon fontSize='small' /> &nbsp; {props.vacation.startDate.slice(0, 10).split("-").reverse().join("/")} - {props.vacation.endDate.slice(0, 10).split("-").reverse().join("/")}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
+                        <Typography variant="body2" color="text.secondary" sx={{ paddingTop: "10px" }}>
                             {props.vacation.description} <br />
                         </Typography>
                         {user && user.role === "User" && (
                             <div>
-                                <span className='Followers'>   Followers: {props.vacation.followersCount}</span>
+                                <br />
+                                <span className='Likes'>   Likes: {props.vacation.followersCount}</span>
                             </div>
                         )}
                     </CardContent>

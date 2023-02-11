@@ -6,6 +6,7 @@ import authService from "../../../Services/AuthService";
 import notify from "../../../Utils/Notify";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import "./Login.css";
+import Footer from "../../LayoutArea/Footer/Footer";
 
 function Login(): JSX.Element {
 
@@ -31,12 +32,10 @@ function Login(): JSX.Element {
                 <h1>Login</h1>
                 <br></br><br></br>
 
-                <label>Email: </label>
-                <input type="email" {...register("email", CredentialsModel.emailValidation)} />
+                <input type="email" placeholder="Email" {...register("email", CredentialsModel.emailValidation)} />
                 <span className="Err">{formState.errors.email?.message}</span>
 
-                <label>Password: </label>
-                <input type="password" {...register("password", CredentialsModel.passwordValidation)} />
+                <input type="password" placeholder="Password" {...register("password", CredentialsModel.passwordValidation)} />
                 <span className="Err">{formState.errors.password?.message}</span>
 
                 <br></br><br></br>
@@ -49,7 +48,7 @@ function Login(): JSX.Element {
 
             </form>
 
-
+            <Footer />
         </div>
     );
 }

@@ -5,14 +5,20 @@
 }
 
 .Register input {
+    border: 1px solid lightseagreen;
     border-radius: 5px;
+    padding: 8px;
 }
 
 .Register button {
-    background-color: lightseagreen;
     width: 50%;
     cursor: pointer;
 }
+
+.Register button:hover {
+    background-color: lightseagreen;
+}
+
 .Register span {
     color: lightseagreen;
     cursor: pointer;

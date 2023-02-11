@@ -36,7 +36,7 @@ export function vacationsReducer(currentState = new AdminVacationsState(), actio
             break;
 
         case AdminVacationsActionType.UpdateVacation:
-            const indexToUpdate = newState.adminVacations.findIndex(v => v.vacationId === action.payload.id);
+            const indexToUpdate = newState.adminVacations.findIndex(v => v.vacationId === action.payload.vacationId);
             if (indexToUpdate >= 0) {
                 newState.adminVacations[indexToUpdate] = action.payload;
             }

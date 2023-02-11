@@ -13,17 +13,6 @@ class VacationModel {
     public idFollowing: number;
     public followersCount: number;
 
-    public constructor(vacation: VacationModel) {
-        this.vacationId = vacation.vacationId;
-        this.destination = vacation.destination;
-        this.description = vacation.description;
-        this.startDate = vacation.startDate;
-        this.endDate = vacation.endDate;
-        this.price = vacation.price;
-        this.imageName = vacation.imageName;
-        this.image = vacation.image;
-    }
-
     public static destinationValidation: RegisterOptions = {
         required: { value: true, message: "Missing destination" },
         minLength: { value: 3, message: "Destination must be minimum 3 chars" },
@@ -46,8 +35,8 @@ class VacationModel {
 
     public static priceValidation: RegisterOptions = {
         required: { value: true, message: "Missing price" },
-        minLength: { value: 0, message: "Price must be minimum 1 number." },
-        maxLength: { value: 1000, message: "Price can't exceed 1000 numbers." }
+        min: { value: 100, message: "Price can't be less than $100" },
+        max: { value: 10000, message: "Price can't exceed 10,000" }
     }
 
     public static imageValidation: RegisterOptions = {

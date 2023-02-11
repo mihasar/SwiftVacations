@@ -25,10 +25,7 @@
 }
 
 .VacationsList .VacationLength {
-    /* background-color: lightblue; */
     font-size: 15px;
-    border: 1px solid lightseagreen;
-    border-radius: 6px;
     width: 70%;
     display: flex;
     justify-content: center;

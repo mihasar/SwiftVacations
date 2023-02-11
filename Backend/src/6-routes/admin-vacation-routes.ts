@@ -55,7 +55,7 @@ router.post("/admin/vacations", verifyAdmin, async (request: Request, response: 
     }
 });
 
-// PUT http://localhost:4000/api/admin/vacations/:id([0-9]+)
+// PUT http://localhost:4000/api/admin/vacations/:vacationId([0-9]+)
 router.put("/admin/vacations/:vacationId([0-9]+)", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
         request.body.vacationId = +request.params.vacationId;
@@ -75,6 +75,17 @@ router.delete("/admin/vacations/:id([0-9]+)", verifyAdmin, async (request: Reque
         const id = +request.params.id;
         await adminVacationsService.deleteVacation(id);
         response.sendStatus(204);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
+// GET http://localhost:4000/api/admin/reports
+router.get("/admin/reports", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const vacations = await adminVacationsService.getReports();
+        response.json(vacations);
     }
     catch (err: any) {
         next(err);

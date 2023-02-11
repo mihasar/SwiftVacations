@@ -5,6 +5,7 @@ import UserModel from "../../../Models/UserModel";
 import authService from "../../../Services/AuthService";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import "./Register.css";
+import Footer from "../../LayoutArea/Footer/Footer";
 
 function Register(): JSX.Element {
 
@@ -28,25 +29,21 @@ function Register(): JSX.Element {
             <form onSubmit={handleSubmit(send)}>
 
                 <h1>Register</h1>
-                <br></br><br></br>
+                <br></br> 
 
-                <label>First name: </label>
-                <input type="text" {...register("firstName", UserModel.firstNameValidation)} />
+                <input type="text" placeholder="First name" {...register("firstName", UserModel.firstNameValidation)} />
                 <span className="Err">{formState.errors.firstName?.message}</span>
 
-                <label>Last name: </label>
-                <input type="text" {...register("lastName", UserModel.lastNameValidation)} />
+                <input type="text" placeholder="Last name" {...register("lastName", UserModel.lastNameValidation)} />
                 <span className="Err">{formState.errors.lastName?.message}</span>
 
-                <label>Email: </label>
-                <input type="email" {...register("email", UserModel.emailValidation)} />
+                <input type="email" placeholder="Email" {...register("email", UserModel.emailValidation)} />
                 <span className="Err">{formState.errors.email?.message}</span>
 
-                <label>Password: </label>
-                <input type="password" {...register("password", UserModel.passwordValidation)} />
+                <input type="password" placeholder="Password" {...register("password", UserModel.passwordValidation)} />
                 <span className="Err">{formState.errors.password?.message}</span>
-                <br></br><br></br> <br></br>
-                
+                <br></br><br></br> 
+
                 <button>Register</button>
 
                 <h4>Have an account already? <span onClick={() => {
@@ -55,6 +52,7 @@ function Register(): JSX.Element {
 
             </form>
 
+            <Footer />
         </div>
     );
 }

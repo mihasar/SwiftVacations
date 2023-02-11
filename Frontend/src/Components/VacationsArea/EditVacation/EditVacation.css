@@ -2,6 +2,11 @@
     border-radius: 5px;
 }
 
+.EditVacation .DescriptionTextBox {
+    padding: 20px;
+    font-size: 15px;
+}
+
 .EditVacation button {
     border: 0px;
     color: darkcyan;

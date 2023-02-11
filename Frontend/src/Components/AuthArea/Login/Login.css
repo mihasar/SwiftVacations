@@ -1,4 +1,4 @@
-.Login > form {
+.Login>form {
     width: 450px;
     margin: 20px auto;
     text-align: center;
@@ -21,11 +21,16 @@
 }
 
 .Login input {
+    border: 1px solid lightseagreen;
     border-radius: 5px;
+    padding: 8px;
 }
 
 .Login button {
-    background-color: lightseagreen;
     width: 50%;
     cursor: pointer;
+}
+
+.Login button:hover {
+    background-color: lightseagreen;
 }

@@ -1,3 +1,13 @@
-.VacationsReports {
-	
+.VacationsReports .BarCharts {
+    background-color: whitesmoke;
+    border: 0.5px solid darkgreen;
+    border-radius: 5px;
+    margin-left: 4%;
+}
+
+.VacationsReports .CSVBtn {
+    border: 0px;
+    opacity: .95;
+    border-radius: 5px;
+    background-color: whitesmoke;
 }

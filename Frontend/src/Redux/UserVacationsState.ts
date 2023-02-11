@@ -33,33 +33,32 @@ export function vacationsReducer(currentState = new UserVacationsState(), action
             newState.userVacations = action.payload;
             break;
 
-        case UserVacationsActionType.follow: 
-            const isNotFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload);
-            if (isNotFollowingToUpdate.idFollowing === 0) {
-                isNotFollowingToUpdate.idFollowing = 1;
-            }
+        case UserVacationsActionType.follow:
+            const isNotFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload)
+            isNotFollowingToUpdate.idFollowing = 1;
+            isNotFollowingToUpdate.followersCount += 1
             break;
 
-        case UserVacationsActionType.unfollow: 
-            const isFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload);
+        case UserVacationsActionType.unfollow:
+            const isFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload)
             if (isFollowingToUpdate.idFollowing === 1) {
                 isFollowingToUpdate.idFollowing = 0;
             }
             break;
-
-        case UserVacationsActionType.AddFollow: 
-            let indexToAddFollow = newState.userVacations.findIndex(v => v.vacationId === action.payload);
-            if (indexToAddFollow >= 0) {
-                newState.userVacations[indexToAddFollow].followersCount += 1;
-            //    indexToAddFollow -1;
-            }
-            break;
+        // case VacationActionType.AddFollow:
+        //         let indexToAddFollow = newState.vacation.findIndex(v => v.vacationId === action.payload) 
+        //         if(indexToAddFollow >= 0){
+        //             newState.vacation[indexToAddFollow].followersCount += 1;
+        //             indexToAddFollow -1;
+        //         }
+        //         break;
 
         case UserVacationsActionType.RemoveFollow:
-            const removeFollowerVacation = newState.userVacations.find(v => v.vacationId === action.payload);
+            const removeFollowerVacation = newState.userVacations.find(v => v.vacationId === action.payload)
             removeFollowerVacation.followersCount -= 1;
             break;
     }
+
 
     return newState;
 }
