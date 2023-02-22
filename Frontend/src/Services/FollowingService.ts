@@ -4,13 +4,10 @@ import appConfig from "../Utils/AppConfig";
 
 class FollowingService {
 
-
-
     public async addUserFollow(vacationId: number): Promise<void> {
         const response = await axios.post(appConfig.followUrl + vacationId);
-        const addedFollow = response.data;
+        // const addedFollow = response.data;
         userVacationsStore.dispatch({ type: UserVacationsActionType.follow, payload: vacationId })
-        userVacationsStore.dispatch({ type: UserVacationsActionType.AddFollow, payload: vacationId })
     }
 
     public async UserUnfollow(vacationId: number): Promise<void> {

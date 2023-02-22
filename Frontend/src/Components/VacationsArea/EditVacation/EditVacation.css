@@ -1,4 +1,17 @@
 .EditVacation input {
+    border: 1px solid lightseagreen;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.EditVacation .InputImage {
+    border: 0px;
+}
+
+.EditVacation .CurrentImage {
+    width: 300px;
+    height: 160px;
+    border: 1px solid darkcyan;
     border-radius: 5px;
 }
 

@@ -1,27 +1,29 @@
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import BoltIcon from '@mui/icons-material/Bolt';
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import VacationModel from '../../../Models/VacationModel';
-// import adminVacationsService from '../../../Services/adminVacationsService';
-import userVacationsService from '../../../Services/userVacationsService';
-import notify from '../../../Utils/Notify';
-import PostAddIcon from '@mui/icons-material/PostAdd';
-import Footer from '../../LayoutArea/Footer/Footer';
-import VacationCard from '../VacationCard/VacationCard';
-import "./VacationsList.css";
+import { Button } from 'react-bootstrap';
+import { NavLink, useNavigate } from 'react-router-dom';
 import UserModel from '../../../Models/UserModel';
-import RoleModel from '../../../Models/RoleModel';
-import { Box, Pagination } from '@mui/material';
+import VacationModel from '../../../Models/VacationModel';
+import { adminVacationsStore } from '../../../Redux/AdminVacationsState';
 import { authStore } from '../../../Redux/AuthState';
 import { userVacationsStore } from '../../../Redux/UserVacationsState';
-import { adminVacationsStore } from '../../../Redux/AdminVacationsState';
+import userVacationsService from '../../../Services/userVacationsService';
+import notify from '../../../Utils/Notify';
+import Pagination from '../../LayoutArea/Pagination/Pagination';
+import VacationCard from '../VacationCard/VacationCard';
+import "./VacationsList.css";
 
 function VacationsList(): JSX.Element {
 
-    const [loading, setLoading] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+    const [isUpcoming, setIsUpcoming] = useState(false);
+    const [showActive, setShowActive] = useState(false);
     const [CurrentPage, setCurrentPage] = useState(1);
-    const [vacationsPerPage, setVacationsPerPage] = useState(6);
+    const [vacationsPerPage, setVacationsPerPage] = useState(3);
     const [vacations, setVacations] = useState<VacationModel[]>([]);
     const [user, setUser] = useState<UserModel>();
+    const navigate = useNavigate();
 
     useEffect(() => {
         setUser(authStore.getState().user);
@@ -32,6 +34,10 @@ function VacationsList(): JSX.Element {
             unsubscribe();
         }
     }, []);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [isLiked, isUpcoming, showActive]);
 
     useEffect(() => {
         userVacationsService.getAllVacationsForUser()
@@ -54,35 +60,70 @@ function VacationsList(): JSX.Element {
         }
     }, []);
 
+    // Set isLiked according to checkbox
+    const handleLikedChange = () => {
+        setIsLiked(!isLiked);
+    }
+
+    // Set isUpcoming according to checkbox
+    const handleUpcomingChange = () => {
+        setIsUpcoming(!isUpcoming);
+    }
+
+    // Set showActive according to checkbox
+    const handleActiveChange = () => {
+        setShowActive(!showActive);
+    }
+
     const lastVacationIndex = CurrentPage * vacationsPerPage;
     const firstVacationIndex = lastVacationIndex - vacationsPerPage;
-    const currentVacation = vacations.slice(firstVacationIndex, lastVacationIndex);
+    const currentVacations = vacations
+        .filter(v => !isLiked || v.idFollowing === 1)
+        .filter(v => !isUpcoming || new Date(v.startDate) > new Date())
+        .filter(v => !showActive || (new Date(v.startDate) <= new Date() && new Date(v.endDate) > new Date()))
+        .slice(firstVacationIndex, lastVacationIndex);
 
     return (
         <div className="VacationsList">
 
+            {/* {user && user.role === "" && (
+                <div>
+                    {navigate("/login")}
+                </div>
+            )} */}
+
             {user && user.role === "Admin" && (
                 <div>
-
-                    {/* <h1>Your Current Vacations</h1> */}
-                    <NavLink to="/vacations/new"><PostAddIcon fontSize='large' sx={{ color: "darkcyan", fontSize: "70px" }} /></NavLink>
-                    <div className='Cards'>
-                        {currentVacation.map(v => <VacationCard key={v.vacationId} vacation={v} />)}
-                        <Pagination
-                         />
-                    </div>
+                    <h2>Your Current Vacations</h2>
+                    <NavLink to="/vacations/new"> <Button className='AddBtn'> Add Vacation <AddCircleOutlineIcon fontSize='large' sx={{ color: "darkcyan", fontSize: "12px" }}  /></Button></NavLink>
                 </div>
             )}
+
             {user && user.role === "User" && (
                 <div>
-                    <h3>Some of our best destinations:</h3> <br />
-                    <div className='Cards'>
-                        {vacations.map(v => <VacationCard key={v.vacationId} vacation={v} />)}
+                    <h2>Our vacations that you can get in a <b>Swift</b><BoltIcon sx={{ color: 'aquamarine' }} /></h2> <br />
+                    <div className='CheckboxDiv'>
+                        <label>
+                            <input type="checkbox" checked={isLiked} onChange={handleLikedChange} />
+                            Liked Vacations
+                        </label>
+                        <label>
+                            <input type="checkbox" checked={isUpcoming} onChange={handleUpcomingChange} />
+                            Upcoming Vacations
+                        </label>
+                        <label>
+                            <input type="checkbox" checked={showActive} onChange={handleActiveChange} />
+                            Active Vacations
+                        </label>
                     </div>
                 </div>
             )}
 
-            {/* TODO - Good activation of pagination */}
+            <div className='Cards'>
+                {currentVacations.map(v => <VacationCard key={v.vacationId} vacation={v} />)}
+            </div>
+
+            <Pagination vacationsPerPage={vacationsPerPage} totalVacations={vacations.length} currentPage={CurrentPage} setCurrentPage={setCurrentPage} />
 
         </div>
     );

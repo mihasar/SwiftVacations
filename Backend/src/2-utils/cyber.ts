@@ -51,7 +51,6 @@ function verifyToken(request: Request): Promise<boolean> {
 
             // Verify:
             jwt.verify(token, secretKey, (err: JsonWebTokenError) => {
-                console.log(err);
 
                 if (err) {
                     reject(new AuthenticationError("Invalid token"));

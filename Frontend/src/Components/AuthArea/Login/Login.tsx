@@ -17,7 +17,7 @@ function Login(): JSX.Element {
         try {
             await authService.Login(credentials);
             notify.success("Welcome back " + credentials.email);
-            navigate("/home");
+            navigate("/vacations");
         }
         catch (err: any) {
             notify.error(err);
@@ -42,7 +42,7 @@ function Login(): JSX.Element {
 
                 <button>Login </button>
 
-                <h4>Have an account already? <span onClick={() => {
+                <h4>Don't have an account? <span onClick={() => {
                     navigate("/register")
                 }}>Register</span></h4>
 

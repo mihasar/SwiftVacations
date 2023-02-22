@@ -2,6 +2,7 @@ import axios from "axios";
 import CredentialsModel from "../Models/CredentialsModel";
 import UserModel from "../Models/UserModel";
 import { AuthActionType, authStore } from "../Redux/AuthState";
+import { UserVacationsActionType, userVacationsStore } from "../Redux/UserVacationsState";
 import appConfig from "../Utils/AppConfig";
 
 class AuthService {
@@ -38,6 +39,7 @@ class AuthService {
     // Logout:
     public Logout(): void {
         authStore.dispatch({ type: AuthActionType.Logout });
+        userVacationsStore.dispatch({type: UserVacationsActionType.FetchUserVacation, payload: []});
     }
     // Is user logged in:
     public isLoggedIn(): boolean {

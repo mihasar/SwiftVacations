@@ -22,7 +22,6 @@ import { Button } from 'react-bootstrap';
 
 interface VacationCardProps {
     vacation: VacationModel;
-    // user: UserModel;
 }
 
 function VacationCard(props: VacationCardProps): JSX.Element {
@@ -129,7 +128,7 @@ function VacationCard(props: VacationCardProps): JSX.Element {
                         {user && user.role === "User" && (
                             <div>
                                 <br />
-                                <span className='Likes'>   Likes: {props.vacation.followersCount}</span>
+                                <span className='Likes'> Likes: {props.vacation.followersCount}</span>
                             </div>
                         )}
                     </CardContent>

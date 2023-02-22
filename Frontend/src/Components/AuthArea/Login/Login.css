@@ -28,6 +28,7 @@
 
 .Login button {
     width: 50%;
+    padding: 5px;
     cursor: pointer;
 }
 

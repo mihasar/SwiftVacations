@@ -1,0 +1,16 @@
+.page-link {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    margin: 2.5px;
+    border-radius: 5px;
+    background-color: whitesmoke;
+    border: 1px solid lightseagreen;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.page-link:hover {
+background-color: lightseagreen;
+color: whitesmoke;
+}

@@ -6,6 +6,7 @@ import authService from "../../../Services/AuthService";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import "./Register.css";
 import Footer from "../../LayoutArea/Footer/Footer";
+import notify from "../../../Utils/Notify";
 
 function Register(): JSX.Element {
 
@@ -15,7 +16,7 @@ function Register(): JSX.Element {
     async function send(user: UserModel) {
         try {
             await authService.register(user);
-            alert("Welcome " + user.firstName);
+            notify.success("Welcome " + user.firstName);
             navigate("/home");
         }
         catch (err: any) {

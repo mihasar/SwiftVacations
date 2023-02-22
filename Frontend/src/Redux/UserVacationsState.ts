@@ -11,7 +11,6 @@ export enum UserVacationsActionType {
     FetchUserVacation = "FetchUserVacation",
     follow = "follow",
     unfollow = "unfollow",
-    AddFollow = "AddFollow",
     RemoveFollow = "RemoveFollow",
 }
 
@@ -45,13 +44,6 @@ export function vacationsReducer(currentState = new UserVacationsState(), action
                 isFollowingToUpdate.idFollowing = 0;
             }
             break;
-        // case VacationActionType.AddFollow:
-        //         let indexToAddFollow = newState.vacation.findIndex(v => v.vacationId === action.payload) 
-        //         if(indexToAddFollow >= 0){
-        //             newState.vacation[indexToAddFollow].followersCount += 1;
-        //             indexToAddFollow -1;
-        //         }
-        //         break;
 
         case UserVacationsActionType.RemoveFollow:
             const removeFollowerVacation = newState.userVacations.find(v => v.vacationId === action.payload)

@@ -27,7 +27,7 @@ class AdminVacationsService {
 
         // If we don't have vacations:
         if (adminVacations.length === 0) {
-            const response = await axios.get<VacationModel[]>(appConfig.adminVacationsUrl);
+            const response = await axios.get<VacationModel[]>(appConfig.adminReportsUrl);
             adminVacations = response.data;
 
             adminVacationsStore.dispatch({ type: AdminVacationsActionType.FetchVacation, payload: adminVacations })

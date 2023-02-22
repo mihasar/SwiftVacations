@@ -52,28 +52,24 @@ function AddVacation(): JSX.Element {
 
                         <form onSubmit={handleSubmit(send)}>
 
-                            <label>Destination: </label>
-                            <input type="text" placeholder="Destination..." {...register("destination", VacationModel.destinationValidation)} />
+                            <input type="text" placeholder="Destination" {...register("destination", VacationModel.destinationValidation)} />
                             <span className="Err">{formState.errors.destination?.message}</span>
 
-                            <label>Description: </label>
-                            <input type="text" placeholder="Description..." className="DescriptionTextBox" {...register("description", VacationModel.descriptionValidation)} />
+                            <input type="text" placeholder="Description" className="DescriptionTextBox" {...register("description", VacationModel.descriptionValidation)} />
                             <span className="Err">{formState.errors.description?.message}</span>
 
-                            <label>Start Date: </label>
+                            <label>Start Date </label>
                             <input type="datetime-local" min={new Date().toISOString().slice(0, -8)} {...register("startDate", VacationModel.startDateValidation)} />
                             <span className="Err">{formState.errors.startDate?.message}</span>
 
-                            <label>End Date: </label>
+                            <label>End Date </label>
                             <input type="datetime-local" min={new Date().toISOString().slice(0, -8)} {...register("endDate", VacationModel.startDateValidation)} />
                             <span className="Err">{formState.errors.endDate?.message}</span>
 
-                            <label>Price: </label>
-                            <input type="number" step="0.01" {...register("price", VacationModel.priceValidation)} />
+                            <input type="number" step="0.01" placeholder="$ Price" {...register("price", VacationModel.priceValidation)} />
                             <span className="Err">{formState.errors.price?.message}</span>
 
-                            <label>Image: </label>
-                            <input type="file" multiple accept="image/*" {...register("image", VacationModel.imageValidation)} />
+                            <input type="file" multiple accept="image/*" className="InputImage" {...register("image", VacationModel.imageValidation)} />
                             <span className="Err">{formState.errors.image?.message}</span>
 
                             <button>add</button>

@@ -13,6 +13,7 @@ function EditVacation(): JSX.Element {
 
     const { register, handleSubmit, formState, setValue } = useForm<VacationModel>();
     const [user, setUser] = useState<UserModel>();
+    const [vacation, setVacation] = useState<VacationModel>();
     const navigate = useNavigate();
     const params = useParams();
 
@@ -32,10 +33,16 @@ function EditVacation(): JSX.Element {
                 setValue("vacationId", vacation.vacationId);
                 setValue("destination", vacation.destination);
                 setValue("description", vacation.description);
-                setValue("startDate", vacation.startDate);
-                setValue("endDate", vacation.endDate);
+                const startDate = new Date(vacation.startDate)
+                const nextStartDate = new Date(startDate.setDate(startDate.getDate() + 1)).toISOString().slice(0, -14);
+                setValue("startDate", nextStartDate);
+                const endDate = new Date(vacation.endDate);
+                const nextEndDate = new Date(endDate.setDate(endDate.getDate() + 1)).toISOString().slice(0, -14);
+                setValue("endDate", nextEndDate);
+                console.log(nextEndDate);
+                console.log(nextStartDate);
                 setValue("price", vacation.price);
-                setValue("imageName", vacation.imageName);
+                setVacation(vacation);
             })
             .catch(err => notify.error(err));
     }, []);
@@ -71,28 +78,28 @@ function EditVacation(): JSX.Element {
                             {/* Hiding */}
                             <input type="hidden" {...register("vacationId")} />
 
-                            <label>Destination: </label>
-                            <input type="text" {...register("destination", VacationModel.destinationValidation)} />
+
+                            <input type="text" placeholder='Destination'{...register("destination", VacationModel.destinationValidation)} />
                             <span className="Err">{formState.errors.destination?.message}</span>
 
-                            <label>Description: </label>
-                            <input type="text" className='DescriptionTextBox' {...register("description", VacationModel.descriptionValidation)} />
+                            <input type="text" placeholder='Description' className='DescriptionTextBox' {...register("description", VacationModel.descriptionValidation)} />
                             <span className="Err">{formState.errors.description?.message}</span>
 
-                            <label>Start Date: </label>
-                            <input type="datetime-local" min={new Date().toISOString().slice(0, -8)} {...register("startDate", VacationModel.startDateValidation)} />
+                            <label>Start Date </label>
+                            <input type="date" min={new Date().toISOString().slice(0, -8)} {...register("startDate", VacationModel.startDateValidation)} />
                             <span className="Err">{formState.errors.startDate?.message}</span>
 
-                            <label>End Date: </label>
-                            <input type="datetime-local" min={new Date().toISOString().slice(0, -8)} {...register("endDate", VacationModel.endDateValidation)} />
+                            <label>End Date </label>
+                            <input type="date" min={new Date().toISOString().slice(0, -8)} {...register("endDate", VacationModel.endDateValidation)} />
                             <span className="Err">{formState.errors.endDate?.message}</span>
 
-                            <label>Price: </label>
-                            <input type="number" step="0.01" {...register("price", VacationModel.priceValidation)} />
+                            <input type="number" step="0.01" placeholder='Price' {...register("price", VacationModel.priceValidation)} />
                             <span className="Err">{formState.errors.price?.message}</span>
 
-                            <label>Image: </label>
-                            <input type="file" accept="image/*" {...register("image", VacationModel.imageValidation)} />
+                            <input type="file" accept="image/*" className='InputImage' {...register("image", VacationModel.imageValidation)} />
+                            <span>
+                                <img className='CurrentImage' alt='vacation' src={vacation?.imageName}/>
+                            </span>
                             <span className="Err">{formState.errors.image?.message}</span>
 
                             <br /><br />

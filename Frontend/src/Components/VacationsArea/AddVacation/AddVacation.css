@@ -9,6 +9,16 @@
      opacity: .9;
  }
 
+ .AddVacation input {
+    border: 1px solid lightseagreen;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+.AddVacation .InputImage {
+    border: 0px;
+}
+
  .AddVacation form>input,
  form>button {
      border-radius: 9px;
@@ -16,7 +26,7 @@
 
 .AddVacation .DescriptionTextBox {
     padding: 20px;
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .AddVacation button {
