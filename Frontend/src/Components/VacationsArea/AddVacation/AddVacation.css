@@ -9,6 +9,10 @@
      opacity: .9;
  }
 
+ .AddVacation .GoBackIcon {
+    margin-left: 110px;
+}
+
  .AddVacation input {
     border: 1px solid lightseagreen;
     border-radius: 5px;

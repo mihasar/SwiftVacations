@@ -23,20 +23,18 @@ import { authStore } from '../../Redux/AuthState';
 
 function NavBarComp() {
 
-    const home = ["home"];
     const Vacations = ["Vacations"];
     const Reports = ["Reports"];
-    const login = ["login"];
-    const register = ["register"];
-    const logout = ["logout"];
 
     const [value, setValue] = useState();
     const navigate = useNavigate();
     const [user, setUser] = useState<UserModel>();
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     useEffect(() => {
+        if (!authStore.getState().user) {
+            navigate("/login");
+        }
         setUser(authStore.getState().user);
         const unsubscribe = authStore.subscribe(() => {
             setUser(authStore.getState().user);
@@ -49,24 +47,20 @@ function NavBarComp() {
     async function navigateVacations() {
         navigate("/vacations");
     }
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
+
+    // Open settings
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
+    // Close settings
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
 
     return (
         <div>
-            <AppBar position="static" sx={{ background: "lightseagreen", fontFamily: "sans-serif" }}>
+            <AppBar position="static" sx={{ background: "lightseagreen", fontFamily: "monospace" }}>
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <BeachAccessIcon sx={{ display: { md: 'flex' }, mr: 1 }} />

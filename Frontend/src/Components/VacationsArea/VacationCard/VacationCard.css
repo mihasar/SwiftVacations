@@ -1,14 +1,19 @@
+.VacationCard div {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .VacationCard .UnfollowBtn {
     color: red;
-    border: 0px solid ;
+    border: 0px solid;
     background-color: transparent;
     border-radius: 5px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-right: 90%;
+    cursor: pointer;
 }
 
-.VacationCard .UnfollowBtn:hover {
-    cursor: pointer;
+.VacationCard button {
+    padding-bottom: 1px;
 }
 
 .VacationCard .FollowBtn {
@@ -17,16 +22,17 @@
     border-radius: 5px;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin-right: 90%;
+    cursor: pointer;
 }
 
 .VacationCard .FollowBtn:hover {
     color: red;
-    cursor: pointer;
 }
 
 .VacationCard .TotalPrice {
-    margin-right: 66.3%;
-    opacity: .9;
+    padding: 8px;
+    border-radius: 7px;
+    font-size: 17px;
 }
 
 .VacationCard .Likes {
@@ -36,4 +42,22 @@
 
 .VacationCard .Price {
     font-weight: bolder;
+}
+
+.VacationCard .ModalButton {
+    border: 1px solid lightseagreen;
+    border-radius: 5px;
+    background-color: transparent;
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    opacity: .9;
+}
+
+.VacationCard .ModalButton:hover {
+    background-color: lightseagreen;
+    color: white;
+    opacity: 1;
 }

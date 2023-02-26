@@ -3,12 +3,16 @@ import appConfig from "../2-utils/appConfig";
 import dal from "../2-utils/dal";
 import imageHandler from "../2-utils/image-handler";
 import { ResourceNotFoundError } from "../4-models/client-errors";
+import ReportsModel from "../4-models/reports-model";
 import VacationModel from "../4-models/vacation-model";
 
 async function getAllVacationsForAdmin(): Promise<VacationModel[]> {
 
     const sql = `SELECT *, CONCAT('${appConfig.adminVacationImagesAddress}', imageName) AS imageName FROM vacations ORDER BY startDate`;
+    
     const vacations = await dal.execute(sql);
+
+    // Return all vacations
     return vacations;
 
 }
@@ -24,18 +28,20 @@ async function getOneVacationForAdmin(vacationId: number): Promise<VacationModel
 
     if (!vacation) throw new ResourceNotFoundError(vacationId);
 
+    // Return the vacation with the vacationId you chose
     return vacation;
 
 }
 
 async function addVacation(vacation: VacationModel): Promise<VacationModel> {
 
+    // Validation:
     vacation.validatePost();
 
     // ImageHandler:
     vacation.imageName = await imageHandler.saveImage(vacation.image);
 
-    const sql = 'INSERT INTO vacations VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)'; // TODO select required data
+    const sql = 'INSERT INTO vacations VALUES(DEFAULT, ?, ?, ?, ?, ?, ?)';
 
     const result: OkPacket = await dal.execute(sql, vacation.destination, vacation.description, vacation.startDate, vacation.endDate, vacation.price, vacation.imageName);
 
@@ -43,12 +49,14 @@ async function addVacation(vacation: VacationModel): Promise<VacationModel> {
 
     delete vacation.image;
 
+    // Return new vacation
     return vacation;
 
 }
 
 async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
 
+    // Validation:
     vacation.validatePut();
 
     vacation.imageName = await getImageNameFromDB(vacation.vacationId);
@@ -67,9 +75,13 @@ async function updateVacation(vacation: VacationModel): Promise<VacationModel> {
     WHERE vacationId = ?`;
 
     const result: OkPacket = await dal.execute(sql, vacation.destination, vacation.description, vacation.startDate, vacation.endDate, vacation.price, vacation.imageName, vacation.vacationId);
+
     if (result.affectedRows === 0) throw new ResourceNotFoundError(vacation.vacationId);
+
+    // Delete vacation previous image
     delete vacation.image;
 
+    // Return the updated vacation
     return vacation;
 }
 
@@ -112,11 +124,22 @@ async function getImageNameFromDB(id: number): Promise<string> {
     return vacation.imageName;
 }
 
-async function getReports(): Promise<void> {
+// Get reports of the vacations likes for admin:
+async function getReportsForAdmin(): Promise<ReportsModel[]> {
 
-    const sql = `SELECT * FROM followers`;
-    const vacations = await dal.execute(sql);
-    return vacations;
+    const sql = `
+    SELECT DISTINCT
+        V.destination,
+        COUNT(F.userId) AS followersCount
+    FROM vacations AS V LEFT JOIN followers AS F
+    ON V.vacationId = F.vacationId
+    GROUP BY V.vacationId
+    `;
+
+    const report = await dal.execute(sql);
+
+    // Return the report
+    return report;
 
 }
 
@@ -126,5 +149,5 @@ export default {
     addVacation,
     updateVacation,
     deleteVacation,
-    getReports
+    getReportsForAdmin
 }

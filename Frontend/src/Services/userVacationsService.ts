@@ -5,6 +5,7 @@ import appConfig from "../Utils/AppConfig";
 
 class UserVacationsService {
 
+    // Get all vacations for user:
     public async getAllVacationsForUser(): Promise<VacationModel[]> {
 
         // Take vacations from global state:
@@ -17,19 +18,29 @@ class UserVacationsService {
             const response = await axios.get<VacationModel[]>(appConfig.userVacationsUrl);
             const userVacations = response.data;
 
-            userVacationsStore.dispatch({ type: UserVacationsActionType.FetchUserVacation, payload: userVacations })
+            userVacationsStore.dispatch({ type: UserVacationsActionType.FetchUserVacation, payload: userVacations });
+
         }
 
         // Return vacations:
         return userVacations;
+
     }
 
+    // Get favorite vacations for user:
     public async getUserFavoriteVacations(): Promise<VacationModel[]> {
 
+        // Get all vacations for user:
         let vacations = await this.getAllVacationsForUser();
-        const favoriteVacations = vacations.filter(v => v.idFollowing === 1 && v)
+
+        // Check if the user liked or not the vacation:
+        const favoriteVacations = vacations.filter(v => v.isFollowing === 1 && v)
+
         await this.getAllVacationsForUser();
+
+        // Return favorite vacations:
         return favoriteVacations;
+
     }
 
 }

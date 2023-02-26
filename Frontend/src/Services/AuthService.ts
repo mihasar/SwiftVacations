@@ -15,7 +15,6 @@ class AuthService {
 
         // Get the returned token:
         const token = response.data;
-        console.log(token);
 
         // Send Token to global state:
         authStore.dispatch({ type: AuthActionType.Register, payload: token });
@@ -23,7 +22,6 @@ class AuthService {
     }
 
     // Login:
-
     public async Login(credentials: CredentialsModel): Promise<void> {
 
         // Send user to backend:
@@ -34,6 +32,7 @@ class AuthService {
     
         // Send Token to global state:
         authStore.dispatch({ type: AuthActionType.Login, payload: token });
+        
     }
 
     // Logout:
@@ -41,6 +40,7 @@ class AuthService {
         authStore.dispatch({ type: AuthActionType.Logout });
         userVacationsStore.dispatch({type: UserVacationsActionType.FetchUserVacation, payload: []});
     }
+
     // Is user logged in:
     public isLoggedIn(): boolean {
         return authStore.getState().token !== null;

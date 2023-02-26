@@ -7,7 +7,9 @@ import VacationModel from "../../../Models/VacationModel";
 import { authStore } from '../../../Redux/AuthState';
 import adminVacationsService from "../../../Services/adminVacationsService";
 import notify from "../../../Utils/Notify";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import "./EditVacation.css";
+import { IconButton } from '@mui/material';
 
 function EditVacation(): JSX.Element {
 
@@ -18,6 +20,9 @@ function EditVacation(): JSX.Element {
     const params = useParams();
 
     useEffect(() => {
+        if (!authStore.getState().user) {
+            navigate("/login");
+        }
         setUser(authStore.getState().user);
         const unsubscribe = authStore.subscribe(() => {
             setUser(authStore.getState().user);
@@ -56,11 +61,11 @@ function EditVacation(): JSX.Element {
         try {
             vacation.image = (vacation.image as unknown as FileList)[0];
             await adminVacationsService.updateVacation(vacation);
-            alert("Vacation has been updated.");
+            notify.success("Vacation has been updated");
             navigate(-1);
         }
         catch (err: any) {
-            alert(err.message);
+            notify.error(err);
         }
     }
 
@@ -71,13 +76,20 @@ function EditVacation(): JSX.Element {
                 <>
                     <div className="EditVacation Box">
 
-                        <h2>Edit Vacation</h2>
+                        <h2>Edit Vacation
+                            <IconButton aria-label='edit'
+                                aria-haspopup="true"
+                                color='primary'
+                                className='GoBackIcon'
+                                onClick={() => navigate(-1)}>
+                                <KeyboardBackspaceIcon />
+                            </IconButton>
+                        </h2>
 
                         <form onSubmit={handleSubmit(send)}>
 
                             {/* Hiding */}
                             <input type="hidden" {...register("vacationId")} />
-
 
                             <input type="text" placeholder='Destination'{...register("destination", VacationModel.destinationValidation)} />
                             <span className="Err">{formState.errors.destination?.message}</span>
@@ -98,7 +110,7 @@ function EditVacation(): JSX.Element {
 
                             <input type="file" accept="image/*" className='InputImage' {...register("image", VacationModel.imageValidation)} />
                             <span>
-                                <img className='CurrentImage' alt='vacation' src={vacation?.imageName}/>
+                                <img className='CurrentImage' alt='vacation' src={vacation?.imageName} />
                             </span>
                             <span className="Err">{formState.errors.image?.message}</span>
 

@@ -1,12 +1,10 @@
-import { Button, ButtonGroup, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import CredentialsModel from "../../../Models/CredentialsModel";
 import authService from "../../../Services/AuthService";
 import notify from "../../../Utils/Notify";
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import "./Login.css";
 import Footer from "../../LayoutArea/Footer/Footer";
+import "./Login.css";
 
 function Login(): JSX.Element {
 
@@ -16,7 +14,7 @@ function Login(): JSX.Element {
     async function send(credentials: CredentialsModel) {
         try {
             await authService.Login(credentials);
-            notify.success("Welcome back " + credentials.email);
+            notify.success("Welcome back");
             navigate("/vacations");
         }
         catch (err: any) {
@@ -49,44 +47,9 @@ function Login(): JSX.Element {
             </form>
 
             <Footer />
+
         </div>
     );
 }
 
 export default Login;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/* <Typography variant="h2">
-                    Login
-                </Typography> */}
-
-{/* <TextField label="Email" type="email" variant="outlined" className="TextBox" {...register("email", CredentialsModel.emailValidation)} />
-                <span className="Err">{formState.errors.email?.message}</span>
-
-                <TextField label="Password" type="password" variant="outlined" className="TextBox" {...register("password", CredentialsModel.passwordValidation)} />
-                <span className="Err">{formState.errors.password?.message}</span>
-
-                <br /><br /><br />
-                <ButtonGroup variant="outlined" fullWidth>
-                    <Button sx={{ backgroundColor: "green", color: "black" }} color="success">
-                        Login &nbsp;
-
-                    </Button>
-                    <Button sx={{ backgroundColor: "red", color: "black" }} color="secondary" type="reset">
-                        Clear &nbsp;
-                        <HighlightOffIcon />
-                    </Button>
-                </ButtonGroup> */}

@@ -1,6 +1,7 @@
 import { RegisterOptions } from "react-hook-form";
 
 class CredentialsModel {
+    
     public email: string;
     public password: string;
 

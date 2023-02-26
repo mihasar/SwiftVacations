@@ -8,7 +8,8 @@ import UserModel from "../4-models/user-model";
 
 async function register(user: UserModel): Promise<string> {
 
-    //TODO - add Validation :
+    // Validation:
+    user.userValidate();
 
     // If email token:
     if (await isEmailTaken(user.email)) throw new ValidationError(`Email ${user.email} already taken`);
@@ -35,7 +36,8 @@ async function register(user: UserModel): Promise<string> {
 
 async function login(credentials: CredentialsModel): Promise<string> {
 
-    // TODO: add validation:
+    // Validation:
+    credentials.credentialsValidate();
 
     // Hash Password:
     credentials.password = cyber.hashPassword(credentials.password);
@@ -60,15 +62,15 @@ async function login(credentials: CredentialsModel): Promise<string> {
 async function isEmailTaken(email: string): Promise<boolean> {
 
     // Create sql query:
-    const sql = `SELECT EXISTS(SELECT email FROM users WHERE email = ?) as isExist`;
+    const sql = `SELECT EXISTS(SELECT email FROM users WHERE email = ?) AS isExist`;
 
     // Execute query:
-    const arr = await dal.execute(sql, email);
+    const result = await dal.execute(sql, email);
 
-    // Extract count:
-    const count = +arr[0].count;
+    // Extract isExist:
+    const isExist = result[0].isExist;
 
-    return count > 0;
+    return isExist;
 }
 
 export default {

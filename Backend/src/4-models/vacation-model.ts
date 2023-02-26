@@ -30,7 +30,7 @@ class VacationModel {
         description: Joi.string().required().min(10).max(1000),
         startDate: Joi.string().required().min(3).max(100),
         endDate: Joi.string().required().min(3).max(100),
-        price: Joi.number().required().min(0).max(5000),
+        price: Joi.number().required().min(0).max(10000),
         imageName: Joi.string().forbidden(),
         image: Joi.object().required()
     })
@@ -41,7 +41,7 @@ class VacationModel {
         description: Joi.string().required().min(5).max(1000),
         startDate: Joi.string().required().min(3).max(100),
         endDate: Joi.string().required().min(3).max(100),
-        price: Joi.number().required().min(0).max(5000),
+        price: Joi.number().required().min(0).max(10000),
         imageName: Joi.string().optional().min(38).max(90),
         image: Joi.object().optional(),
     });
@@ -54,8 +54,6 @@ class VacationModel {
         const result = VacationModel.putValidationSchema.validate(this);
         if (result.error) throw new ValidationError(result.error.message);
     }
-
-
 
 }
 

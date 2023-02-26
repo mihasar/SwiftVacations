@@ -1,3 +1,4 @@
+import { IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -5,6 +6,7 @@ import UserModel from "../../../Models/UserModel";
 import VacationModel from "../../../Models/VacationModel";
 import { authStore } from "../../../Redux/AuthState";
 import vacationService from "../../../Services/adminVacationsService";
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import notify from "../../../Utils/Notify";
 import "./AddVacation.css";
 
@@ -15,6 +17,9 @@ function AddVacation(): JSX.Element {
     const navigate = useNavigate();
 
     useEffect(() => {
+        if (!authStore.getState().user) {
+            navigate("/login");
+        }
         setUser(authStore.getState().user);
         const unsubscribe = authStore.subscribe(() => {
             setUser(authStore.getState().user);
@@ -33,13 +38,12 @@ function AddVacation(): JSX.Element {
         try {
             vacation.image = (vacation.image as unknown as FileList)[0];
             await vacationService.addVacation(vacation);
-            alert("Vacation has been added.");
+            notify.success("Vacation has been added");
             navigate("/vacations");
         }
         catch (err: any) {
-            alert(err.message);
+            notify.error(err);
         }
-
     }
 
     return (
@@ -48,7 +52,15 @@ function AddVacation(): JSX.Element {
                 <>
                     <div className="AddVacation Box">
 
-                        <h2>Add vacation</h2>
+                        <h2>Add vacation
+                            <IconButton aria-label='edit'
+                                aria-haspopup="true"
+                                color='primary'
+                                className='GoBackIcon'
+                                onClick={() => navigate(-1)}>
+                                <KeyboardBackspaceIcon />
+                            </IconButton>
+                        </h2>
 
                         <form onSubmit={handleSubmit(send)}>
 
@@ -79,7 +91,7 @@ function AddVacation(): JSX.Element {
                     </div>
                 </>
             )}
-        </div>
+        </div >
     );
 }
 

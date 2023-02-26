@@ -8,6 +8,7 @@ class AppConfig {
     public adminVacationsImagesUrl = "http://localhost:4000/api/admin/vacations/images/";
     public userVacationsImagesUrl = "http://localhost:4000/api/users/vacations/images/";
     public followUrl = "http://localhost:4000/api/users/follow/";
+    public reportsUrl = "http://localhost:4000/api/admin/reports/";
 
 }
 

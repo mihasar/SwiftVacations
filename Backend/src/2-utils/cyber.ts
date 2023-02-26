@@ -47,8 +47,6 @@ function verifyToken(request: Request): Promise<boolean> {
                 return;
             }
 
-
-
             // Verify:
             jwt.verify(token, secretKey, (err: JsonWebTokenError) => {
 
@@ -88,9 +86,6 @@ function getUserFromToken(request: Request): UserModel {
 function hashPassword(plainText: string): string {
 
     if (!plainText) return null;
-
-    // Hashing without salt: 
-    // const hashedPassword = crypto.createHash("sha512").update(plainText).digest("hex");
 
     // Hashing with salt: 
     const salt = "MakeThingsGoRight";

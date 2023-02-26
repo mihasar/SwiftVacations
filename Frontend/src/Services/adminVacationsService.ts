@@ -5,7 +5,9 @@ import appConfig from "../Utils/AppConfig";
 
 class AdminVacationsService {
 
+    // Get all vacations for admin:
     public async getAllVacationsForAdmin(): Promise<VacationModel[]> {
+
         // Take vacations from global state:
         let adminVacations = adminVacationsStore.getState().adminVacations;
 
@@ -21,7 +23,9 @@ class AdminVacationsService {
         return adminVacations;
     }
 
+    // Get all reports for admin:
     public async getAllReportsForAdmin(): Promise<VacationModel[]> {
+
         // Take vacations from global state:
         let adminVacations = adminVacationsStore.getState().adminVacations;
 
@@ -37,6 +41,7 @@ class AdminVacationsService {
         return adminVacations;
     }
 
+    // Get one vacation for admin:
     public async getOneVacationForAdmin(vacationId: number): Promise<VacationModel> {
 
         // Take vacations from global state:
@@ -54,32 +59,40 @@ class AdminVacationsService {
         return adminVacation;
     }
 
+    // Add vacation:
     public async addVacation(vacation: VacationModel): Promise<void> {
+
         const headers = { "Content-Type": "multipart/form-data" };
         const response = await axios.post<VacationModel>(appConfig.adminVacationsUrl, vacation, { headers });
         const addedVacation = response.data;
+
         addedVacation.imageName = appConfig.adminVacationsImagesUrl + addedVacation.imageName;
-        console.log(addedVacation);
-        console.log(addedVacation.imageName);
+
         adminVacationsStore.dispatch({ type: AdminVacationsActionType.AddVacation, payload: addedVacation });
+
     }
 
+    // Update vacation:
     public async updateVacation(vacation: VacationModel): Promise<void> {
 
         const headers = { "Content-Type": "multipart/form-data" };
         const response = await axios.put<VacationModel>(appConfig.adminVacationsUrl + vacation.vacationId, vacation, { headers });
         const updateVacation = response.data;
+        
         updateVacation.imageName = appConfig.adminVacationsImagesUrl + updateVacation.imageName;
-        console.log(updateVacation);
-        console.log(updateVacation.imageName);
+
         adminVacationsStore.dispatch({ type: AdminVacationsActionType.UpdateVacation, payload: updateVacation });
+
     }
 
+    // Delete vacation:
     public async deleteVacation(id: number): Promise<void> {
+
         await axios.delete(appConfig.adminVacationsUrl + id);
 
         // Send deleted vacations into redux global state (which will call the reducer):
         adminVacationsStore.dispatch({ type: AdminVacationsActionType.DeleteVacation, payload: id });
+
     }
 
 }

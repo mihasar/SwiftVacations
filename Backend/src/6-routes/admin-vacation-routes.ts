@@ -84,13 +84,12 @@ router.delete("/admin/vacations/:id([0-9]+)", verifyAdmin, async (request: Reque
 // GET http://localhost:4000/api/admin/reports
 router.get("/admin/reports", verifyAdmin, async (request: Request, response: Response, next: NextFunction) => {
     try {
-        const vacations = await adminVacationsService.getReports();
-        response.json(vacations);
+        const report = await adminVacationsService.getReportsForAdmin();
+        response.json(report);
     }
     catch (err: any) {
         next(err);
     }
 });
-
 
 export default router;

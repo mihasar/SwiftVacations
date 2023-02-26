@@ -61,10 +61,12 @@ function createImageName(originalImageName: string): string {
 }
 
 function getAbsolutePath(imageName: string): string {
+    
     let absolutePath = path.join(__dirname, "..", "1-assets", "images", "vacations", imageName);
     if (!fs.existsSync(absolutePath)) {
         absolutePath = path.join(__dirname, "..", "1-assets", "images", "not-found.png");
     }
+
     return absolutePath;
 }
 

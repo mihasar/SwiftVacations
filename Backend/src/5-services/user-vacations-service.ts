@@ -17,6 +17,8 @@ async function getAllVacationsForUser(user: UserModel): Promise<VacationModel[]>
     `;
 
     const vacations = await dal.execute(sql, user.userId);
+
+    // Return all vacations
     return vacations;
 
 }

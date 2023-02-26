@@ -20,11 +20,10 @@ export interface VacationsAction {
     payload: any; // What is the data needed?
 }
 
-
 //4. Reducer - function performing the needed actions (the action object is the one sent via dispatch function): 
 export function vacationsReducer(currentState = new UserVacationsState(), action: VacationsAction): UserVacationsState {
+
     const newState = { ...currentState };
-    console.log(action)
 
     switch (action.type) {
 
@@ -34,14 +33,14 @@ export function vacationsReducer(currentState = new UserVacationsState(), action
 
         case UserVacationsActionType.follow:
             const isNotFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload)
-            isNotFollowingToUpdate.idFollowing = 1;
+            isNotFollowingToUpdate.isFollowing = 1;
             isNotFollowingToUpdate.followersCount += 1
             break;
 
         case UserVacationsActionType.unfollow:
             const isFollowingToUpdate = newState.userVacations.find(v => v.vacationId === action.payload)
-            if (isFollowingToUpdate.idFollowing === 1) {
-                isFollowingToUpdate.idFollowing = 0;
+            if (isFollowingToUpdate.isFollowing === 1) {
+                isFollowingToUpdate.isFollowing = 0;
             }
             break;
 
@@ -51,11 +50,9 @@ export function vacationsReducer(currentState = new UserVacationsState(), action
             break;
     }
 
-
     return newState;
-}
 
+}
 
 //5. Store - Redux manager:
 export const userVacationsStore = createStore(vacationsReducer);
-

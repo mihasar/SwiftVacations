@@ -19,10 +19,6 @@ function Layout(): JSX.Element {
                 <Routing />
             </main>
 
-            {/* <footer>
-                <Footer/>
-            </footer> */}
-
         </div>
     );
 }

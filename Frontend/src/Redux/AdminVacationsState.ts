@@ -20,9 +20,9 @@ export interface AdminVacationsAction {
     payload: any; // What is the data needed?
 }
 
-
 //4. Reducer - function performing the needed actions (the action object is the one sent via dispatch function): 
 export function vacationsReducer(currentState = new AdminVacationsState(), action: AdminVacationsAction): AdminVacationsState {
+
     const newState = { ...currentState };
 
     switch (action.type) {
@@ -52,9 +52,8 @@ export function vacationsReducer(currentState = new AdminVacationsState(), actio
     }
 
     return newState;
-}
 
+}
 
 //5. Store - Redux manager:
 export const adminVacationsStore = createStore(vacationsReducer);
-

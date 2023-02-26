@@ -18,7 +18,7 @@ router.post("/auth/register", async (request: Request, response: Response, next:
     }
 })
 
-// POST http://localhost:4000/api/auth/register
+// POST http://localhost:4000/api/auth/login
 router.post("/auth/login", async (request: Request, response: Response, next: NextFunction) => {
     try {
         const credentials = new CredentialsModel(request.body);

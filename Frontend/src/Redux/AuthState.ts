@@ -4,6 +4,7 @@ import UserModel from "../Models/UserModel";
 
 // 1. Global State
 export class AuthState {
+    
     public token: string = null;
     public user: UserModel = null;
 
@@ -32,6 +33,7 @@ export interface AuthAction {
 
 // 4. Reducer
 export function authReducer(currentState = new AuthState(), action: AuthAction): AuthState {
+
     const newState = { ...currentState };
 
     switch (action.type) {
@@ -53,6 +55,7 @@ export function authReducer(currentState = new AuthState(), action: AuthAction):
     }
 
     return newState;
+
 }
 
 // 5. Store

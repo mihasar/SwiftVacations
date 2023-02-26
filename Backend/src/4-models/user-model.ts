@@ -1,3 +1,5 @@
+import Joi from "joi";
+import { ValidationError } from "./client-errors";
 import RoleModel from "./role-model";
 
 class UserModel {
@@ -18,7 +20,19 @@ class UserModel {
         this.role = user.role;
     }
 
-    // TODO: Validation
+    private static userSchema = Joi.object({
+        userId: Joi.number().integer().positive(),
+        firstName: Joi.string().required().min(2).max(30),
+        lastName: Joi.string().required().min(2).max(30),
+        email: Joi.string().email().required(),
+        password: Joi.string().min(4).required(),
+        role: Joi.optional()
+    });
+
+    public userValidate(): void {
+        const result = UserModel.userSchema.validate(this);
+        if (result.error) throw new ValidationError(result.error.message);
+    }
 
 }
 

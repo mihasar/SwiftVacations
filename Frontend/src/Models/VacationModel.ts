@@ -10,7 +10,7 @@ class VacationModel {
     public price: number;
     public imageName: string;
     public image: File;
-    public idFollowing: number;
+    public isFollowing: number;
     public followersCount: number;
 
     public static destinationValidation: RegisterOptions = {
@@ -42,6 +42,7 @@ class VacationModel {
     public static imageValidation: RegisterOptions = {
         required: { value: true, message: "Missing image" },
     }
+    
 }
 
 export default VacationModel;
